@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eternity.blog.system.mapper.IOnlineSessionMapper">
+    <resultMap id="SessionMap" type="com.eternity.blog.system.domain.session.OnlineSessionModel">
+        <id property="uoSessionId" column="uo_session_id" />
+        <id property="uoUid" column="uo_uid" />
+        <id property="uoIp" column="uo_ip" />
+        <id property="uoBrowser" column="uo_browser" />
+        <id property="uoOs" column="uo_os" />
+        <id property="uoStartDate" column="uo_start_date" />
+        <id property="uoLastDate" column="uo_last_date" />
+        <id property="uoExpireTime" column="uo_expire_time" />
+        <id property="uoStatus" column="uo_status" />
+    </resultMap>
+
+    <sql id="selectSql">
+        SELECT
+        u_users_online.uo_session_id,
+        u_users_online.uo_uid,
+        u_users_online.uo_ip,
+        u_users_online.uo_browser,
+        u_users_online.uo_os,
+        u_users_online.uo_start_date,
+        u_users_online.uo_last_date,
+        u_users_online.uo_expire_time,
+        u_users_online.uo_status
+        FROM
+        u_users_online
+    </sql>
+
+    <insert id="insertSession" parameterType="com.eternity.blog.system.domain.session.OnlineSessionModel">
+        REPLACE INTO u_users_online (
+        u_users_online.uo_session_id,
+        u_users_online.uo_uid,
+        u_users_online.uo_ip,
+        u_users_online.uo_browser,
+        u_users_online.uo_os,
+        u_users_online.uo_start_date,
+        u_users_online.uo_last_date,
+        u_users_online.uo_expire_time,
+        u_users_online.uo_status
+        ) VALUES (
+        #{uoSessionId},#{uoUid},
+        #{uoIp},#{uoBrowser},
+        #{uoOs},#{uoStartDate},
+        #{uoLastDate},#{uoExpireTime},
+        #{uoStatus}
+        )
+    </insert>
+
+    <delete id="deleteSession">
+        DELETE FROM u_users_online
+        WHERE
+        u_users_online.uo_session_id = #{sessionId}
+    </delete>
+
+    <update id="updateSession">
+        UPDATE u_users_online
+        SET
+        <if test="uoSessionId != null and uoSessionId != ''">u_users_online.uo_session_id = #{uoSessionId},</if>
+        <if test="uoUid != null and uoUid != ''">u_users_online.uo_uid = #{uoUid},</if>
+        <if test="uoIp != null and uoIp != ''">u_users_online.uo_ip = #{uoIp},</if>
+        <if test="uoBrowser != null and uoBrowser != ''">u_users_online.uo_browser = #{uoBrowser},</if>
+        <if test="uoOs != null and uoOs != ''">u_users_online.uo_os = #{uoOs},</if>
+        <if test="uoStartDate != null and uoStartDate != ''">u_users_online.uo_start_date = #{uoStartDate},</if>
+        <if test="uoLastDate != null and uoLastDate != ''">u_users_online.uo_last_date = #{uoLastDate},</if>
+        <if test="uoExpireTime != null and uoExpireTime != ''">u_users_online.uo_expire_time = #{uoExpireTime},</if>
+        <if test="uoStatus != null and uoStatus != ''">u_users_online.uo_status = #{uoStatus}</if>
+        WHERE
+        u_users_online.uo_session_id = #{uoSessionId}
+    </update>
+
+    <select id="selectSessionBySessionId"
+            parameterType="string"
+            resultMap="SessionMap">
+        <include refid="selectSql"/>
+        WHERE u_users_online.uo_session_id = #{sessionId}
+    </select>
+
+    <select id="selectExpiredSessionByDate"
+            parameterType="string"
+            resultMap="SessionMap">
+        <include refid="selectSql"/>
+        WHERE u_users_online.uo_last_date <![CDATA[ <= ]]> #{expiredDate} ORDER BY u_users_online.uo_last_date ASC
+    </select>
+</mapper>

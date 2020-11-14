@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>500 - eternity</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="../../static/lib/aos/aos.css" media="all">
+  <link rel="stylesheet" href="../../static/lib/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../static/lib/materialize/materialize.min.css" media="all">
+  <link rel="stylesheet" href="../../static/lib/font-awesome/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" href="../../static/lib/animate/animate.min.css" media="all">
+  <link rel="stylesheet" href="../../static/css/common.css" media="all">
+  <link rel="stylesheet" href="../../static/css/header.css" media="all">
+  <link rel="stylesheet" href="../../static/css/largeImage.css" media="all">
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background-color: #00000070;
+      padding: 0px;
+      margin: 0;
+    }
+
+    main {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+
+    .large,
+    .large-header {
+      height: 100% !important;
+    }
+
+    .large-title h3 {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 菜单栏 -->
+  <header class="navbar-fixed right-align" data-aos="fade-down" data-aos-duration="800">
+    <a href="/" class="blog-logo" style="z-index: 998;">K</a>
+    <div id="sidebarSwitch" class="sidebar-switch hide">
+      <span class="fa fa-navicon"></span>
+    </div>
+    <ul id="mHeader" class="layui-nav" style="background-color:rgba(0, 0, 0, 0);">
+      <li class="layui-nav-item">
+        <a href="/" class="font-size-16">首页</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/category" class="font-size-16">专栏</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/archives" class="font-size-16">归档</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/about" class="font-size-16">关于</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/login" class="font-size-16">登录</a>
+      </li>
+    </ul>
+  </header>
+
+
+  <!-- 主体 -->
+  <main id="mMain">
+    <div class="large animated fadeIn">
+      <div class="large-header">
+        <div class="large-title">
+        </div>
+        <div class="mask"></div>
+        <div class="large-center container materialize">
+          <div class="large-title large-center sidebar-font">
+            <h2>500</h2>
+            <h5>抱歉，服务器发生错误，无法完成请求。</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 侧边菜单 -->
+  <a href="#" data-activates="slide-out" class="button-collapse"></a>
+  <ul id="slide-out" class="side-nav sidebar-backgroud">
+    <li><a class="waves-effect" href="#"></a></li>
+    <li><a class="waves-effect" href="/templates/main.html">首页</a></li>
+    <li><a class="waves-effect" href="/templates/category.html">专栏</a></li>
+    <li><a class="waves-effect" href="/templates/about.html">关于</a></li>
+  </ul>
+
+  <!-- 返回顶部按钮 btn-large -->
+  <div id="arrowUp" class="fixed-action-btn am-hide">
+    <a class="btn-floating arrow-up-backgroud">
+      <i class="large fa fa-arrow-up"></i>
+    </a>
+  </div>
+
+  <script src="../../static/js/jquery-3.4.1.min.js" th:src="@{../static/js/jquery-3.4.1.min.js}"></script>
+  <script src="../../static/js/masonry.pkgd.min.js" charset="utf-8"></script>
+  <script src="../../static/lib/aos/aos.js" charset="utf-8"></script>
+  <script src="../../static/lib/layui/layui.js" charset="utf-8"></script>
+  <script src="../../static/lib/materialize/materialize.min.js" charset="utf-8"></script>
+  <script src="../../static/js/common.js" charset="utf-8"></script>
+
+</body>
+
+</html>

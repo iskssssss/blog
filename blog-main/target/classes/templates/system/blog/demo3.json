@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 10,
+  "data": [{
+    "abAid": "10001",
+    "abTitle": "杜甫",
+    "abUid": "xianxin@layui.com",
+    "adType": "男",
+    "abPublish": "男",
+    "abUpdateDate": "2016-10-14",
+    "abPublishDate": "2016-10-14"
+  }, {
+    "abAid": "10002",
+    "abTitle": "杜甫",
+    "abUid": "xianxin@layui.com",
+    "adType": "男",
+    "abPublish": "男",
+    "abUpdateDate": "2016-10-14",
+    "abPublishDate": "2016-10-14"
+  }]
+}

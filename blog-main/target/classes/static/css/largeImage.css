@@ -1,0 +1,26 @@
+.large .large-header {
+  position: relative;
+  width: 100%;
+  /* background: linear-gradient(-225deg, #7DE2FC 0%, #B9B6E5 100%); */
+  background-image: url("../../static/medias/featureimages/7.jpg");
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+  z-index: 1;
+}
+
+.large .large-header {
+  height: 25em;
+}
+
+.large .large-header .large-title {
+  margin: 0 25px;
+  text-align: center;
+}
+
+.large .large-header .large-center {
+  position: relative;
+  top: 50%;
+  margin: 0 auto !important;
+  transform: translateY(-50%);
+}

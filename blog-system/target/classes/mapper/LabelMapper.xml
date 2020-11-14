@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eternity.blog.system.mapper.ILabelMapper">
+    <resultMap id="LabelMap" type="com.eternity.blog.system.domain.blog.LabelModel">
+        <id property="lLid" column="l_lid" />
+        <result property="lName" column="l_name" />
+        <result property="lAlias" column="l_alias" />
+        <result property="lDescription" column="l_description" />
+        <result property="lAddDate" column="l_add_date" />
+    </resultMap>
+
+    <insert id="insertLabel" parameterType="com.eternity.blog.system.domain.blog.LabelModel">
+        INSERT INTO
+        b_labels (
+        b_labels.l_lid,
+        b_labels.l_name,
+        <if test="lAlias != null and lAlias != ''">b_labels.l_alias,</if>
+        <if test="lDescription != null and lDescription != ''">b_labels.l_description,</if>
+        b_labels.l_add_date
+        ) VALUES (
+        #{lLid},
+        #{lName},
+        <if test="lAlias != null and lAlias != ''">#{lAlias},</if>
+        <if test="lDescription != null and lDescription != ''">#{lDescription},</if>
+        #{lAddDate}
+        )
+    </insert>
+
+    <update id="updateLabel" parameterType="com.eternity.blog.system.domain.blog.LabelModel">
+        UPDATE b_labels
+        SET
+        <if test="lName != null and lName != ''">b_labels.l_name = #{lName}</if>
+        <if test="((lName != null and lName != '') and lAlias       != null) or
+                  ((lName != null and lName != '') and lDescription != null)">,</if>
+        <if test="lAlias != null">b_labels.l_alias = #{lAlias}</if>
+        <if test="lAlias != null and lDescription != null">,</if>
+        <if test="lDescription != null">b_labels.l_description = #{lDescription}</if>
+        WHERE
+        b_labels.l_lid = #{lLid}
+    </update>
+    <delete id="deleteLabelByLid" parameterType="long">
+        DELETE FROM
+        b_labels
+        WHERE
+        b_labels.l_lid = #{lId}
+    </delete>
+
+    <select id="selectAll" parameterType="long" resultMap="LabelMap">
+        SELECT
+        b_labels.l_lid,
+        b_labels.l_name,
+        b_labels.l_alias,
+        b_labels.l_description,
+        b_labels.l_add_date
+        FROM
+        b_labels
+        ORDER BY b_labels.l_name ASC
+    </select>
+    <select id="checkLabelById" parameterType="long" resultType="int">
+        SELECT
+        COUNT(1)
+        FROM
+        b_labels
+        WHERE b_labels.l_lid = #{lId}
+    </select>
+    <select id="checkLabelByName" parameterType="string" resultType="int">
+        SELECT
+        COUNT(1)
+        FROM
+        b_labels
+        WHERE b_labels.l_name = #{lName}
+    </select>
+    <select id="selectLimit" parameterType="int" resultMap="LabelMap">
+<!--        SELECT * FROM b_labels-->
+<!--        WHERE l_add_date <= (SELECT l_add_date FROM b_labels ORDER BY l_add_date DESC LIMIT 0, 1)-->
+<!--        ORDER BY l_add_date DESC-->
+<!--        LIMIT 5-->
+        SELECT * FROM b_labels ORDER BY l_add_date DESC LIMIT #{page}, #{limit}
+    </select>
+
+    <select id="selectAllCount" resultType="long">
+        SELECT COUNT(1) FROM b_labels
+    </select>
+
+    <select id="checkLabelUse" resultType="int">
+        SELECT COUNT(1) FROM b_article_labels WHERE b_article_labels.al_lid =  #{lId}
+    </select>
+</mapper>

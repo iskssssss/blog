@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>管理 - eternity</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <!-- LayUI -->
+  <link rel="stylesheet" href="../../../static/lib/layui/css/layui.css"
+    th:href="@{../../../static/lib/layui/css/layui.css}" media="all">
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      /* background-color: rgb(201, 127, 127); */
+      background-image: url(../../../static/img/_backgroud.gif);
+      padding: 0px;
+      margin: 0;
+    }
+
+    table {
+      width: 100% !important;
+      padding: 10px;
+    }
+
+    .layui-table,
+    .layui-table-view {
+      margin: 0;
+    }
+
+    main {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 主体 -->
+  <main id="mMain">
+    <div class="layui-row" style="height: 100%;">
+      <div class="layui-col-md12" style="height: 100%;">
+        <div class="layui-card" style="height: 100%;">
+          <!-- <div class="layui-card-body"> -->
+          <table class="layui-hide" id="mCommentTable" lay-filter="mCommentTable"></table>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <a class="layui-btn layui-btn-sm" lay-event="mReload">刷新</a>
+      <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delCheck">删除</a>
+    </div>
+  </script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delComment">删除</a>
+  </script>
+
+  <!-- Jquery -->
+  <script src="../../../static/js/jquery-3.4.1.min.js" th:src="@{../../../static/js/jquery-3.4.1.min.js}"
+    charset="utf-8">
+    </script>
+
+  <!-- LayUI -->
+  <script src="../../../static/lib/layui/layui.js" th:src="@{../../../static/lib/layui/layui.js}" charset="utf-8">
+  </script>
+
+  <script type="text/javascript" th:inline="javascript">
+    var mAid;
+    $(function () {
+      mHeadMonitor();
+      mRowMonitor();
+      mRender('aId');
+    });
+
+    function delComments(comments) {
+      if (comments == null || comments == '') {
+        parent.layer.msg('未选中', {
+          time: 600
+        });
+        return;
+      }
+      console.info(comments);
+      console.info(JSON.stringify(comments));
+      var commentList = [];
+      if (!Array.isArray(comments)) {
+        commentList.push(comments);
+        comments = commentList;
+      }
+      parent.layer.prompt({
+        formType: 1,
+        title: '删除',
+        area: ['450px', '100px'],
+        resize: false,
+        btnAlign: 'c',
+        content: "确定删除吗(删除的若是夫评论 子评论也会被删除)?",
+        yes: function (index, layero) {
+
+          $.ajax({
+            traditional: true,
+            type: 'post',
+            url: '/blog/delCommentList',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(comments),
+            success: function (data) {
+              if (data.code == 200) {
+                ShowMessage('删除成功.', 'success');
+                reload();
+                return;
+              }
+              ShowMessage(data.message, 'error');
+            }
+          });
+          parent.layer.close(index);
+        },
+        btn2: function () {
+          parent.layer.msg('已取消', {
+            time: 600
+          });
+          return true;
+        },
+        cancel: function (index, layero) {
+          parent.layer.msg('已取消', {
+            time: 600
+          });
+          return true;
+        }
+      });
+    }
+
+    /**
+     * 头工具栏事件
+     */
+    function mHeadMonitor() {
+      layui.use('table', function () {
+        var table = layui.table;
+        table.on('toolbar(mCommentTable)', function (obj) {
+          switch (obj.event) {
+            case 'delCheck':
+              var checkStatus = table.checkStatus(obj.config.id);
+              var data = checkStatus.data;
+              delComments(data);
+              break;
+            case 'mReload':
+              reload();
+              break;
+          };
+        });
+      });
+    }
+
+    /**
+     * 监听行工具事件
+     */
+    function mRowMonitor() {
+      layui.use('table', function () {
+        var table = layui.table;
+        table.on('tool(mCommentTable)', function (obj) {
+          var data = obj.data;
+          switch (obj.event) {
+            case 'delComment':
+              delComments(data);
+              break;
+          }
+        });
+      });
+    }
+    /**
+     * 初始化表格
+     */
+    function mRender(aId) {
+      mAid = aId;
+      layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+          elem: '#mCommentTable',
+          url: '/blog/getCommentList/' + mAid,
+          // url: '/blog/getBlogList',
+          toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+          height: 'full',
+          cellMinWidth: 80,
+          title: '分类表',
+          cols: [
+            [{
+              type: 'checkbox'
+            }, , {
+              field: 'cCid',
+              title: '评论编号',
+              width: 105,
+              sort: true
+            }, {
+              field: 'cFatherCid',
+              title: '夫ID',
+              width: 105,
+              sort: true, templet: function (d) {
+                return d.cFatherCid == null ? '无' : d.cFatherCid;
+              }
+            },
+            {
+              field: 'cuUsername',
+              title: '用户昵称',
+              templet: function (d) {
+                return d.commentsUser.cuUsername;
+              }
+            }, {
+              field: 'cuEmail',
+              title: '用户邮箱',
+              templet: function (d) {
+                return d.commentsUser.cuEmail == null ? '无' : d.commentsUser.cuEmail;
+              }
+            }, {
+              field: 'cuWebsite',
+              title: '用户网址',
+              templet: function (d) {
+                return d.commentsUser.cuWebsite == null ? '无' : d.commentsUser.cuWebsite;
+              }
+            }, {
+              field: 'cContent',
+              title: '评论内容',
+            }, {
+              field: 'cDate',
+              title: '评论时间',
+              sort: true
+            }, {
+              fixed: 'right',
+              title: '操作',
+              toolbar: '#barDemo',
+              width: 64,
+              // unresize: true
+            }]
+          ],
+          page: true,
+          limit: 10,
+          limits: [5, 10, 15]
+        });
+      });
+      reload();
+    }
+
+    /**
+     * 重载表格
+     */
+    function reload() {
+      layui.use('table', function () {
+        var table = layui.table;
+        table.reload('mCommentTable', {
+          url: '/blog/getCommentList/' + mAid,
+          page: {
+            curr: 1
+          },
+          where: {},
+          error: {}
+        });
+      });
+    }
+
+    /**
+     * 消息框
+     */
+    function ShowMessage(msg, strIcon) {
+      var icon = 1;
+      if (strIcon == "error") {
+        icon = 2;
+      } else if (strIcon == "none") {
+        layer.msg(msg, {
+          time: 1000
+        });
+        return;
+      }
+      layer.msg(msg, {
+        icon: icon,
+        time: 1000
+      });
+    }
+  </script>
+</body>
+
+</html>

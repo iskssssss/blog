@@ -1,0 +1,1012 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title th:text="${blog?.abTitle}">文章 - K</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="../static/lib/aos/aos.css" media="all">
+  <link rel="stylesheet" href="../static/lib/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../static/lib/semantic/semantic.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/materialize/materialize.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/font-awesome/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/animate/animate.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/typo/typo.css" media="all">
+  <link rel="stylesheet" href="../static/mod/lightgallery/css/lightgallery.min.css" media="all">
+  <link rel="stylesheet" href="../static/css/common.css" media="all">
+  <link rel="stylesheet" href="../static/lib/prism/prism.css" media="all">
+  <link rel="stylesheet" href="../static/css/header.css" media="all">
+  <link rel="stylesheet" href="../static/css/catalog.css" media="all">
+  <link rel="stylesheet" href="../static/css/largeImage.css" media="all">
+
+  <style>
+    /* 大于1200 */
+    @media only screen and (max-width: 1201px) {
+      .catalog-hide {
+        display: none !important;
+        visibility: hidden !important;
+      }
+
+      .l10 {
+        width: 100% !important;
+      }
+    }
+
+    /* 大于600 */
+    @media only screen and (min-width: 601px) {
+      .container {
+        width: 80% !important;
+      }
+    }
+
+    /* 正文位置及大小 */
+    @media only screen and (max-width: 601px) {
+      .container {
+        margin: 0 auto;
+        max-width: 2560px;
+        width: 90% !important;
+      }
+    }
+
+    /* 正文离巨幕的距离 */
+    main {
+      margin-top: 2em !important;
+    }
+
+    /* 用户固定目录 */
+    .catalog-fixed {
+      position: fixed;
+      /* top: 53px; */
+      top: 5px;
+    }
+
+    a:hover {
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .catalog {
+      width: 16em;
+    }
+
+    .catalog ul {
+      margin: 0 0 0 1em !important;
+    }
+
+    .catalog li {
+      margin: 0.5em 0 0.6em 0 !important;
+    }
+
+    table.responsive-table tr {
+      padding: 0 5px !important;
+    }
+
+    .card {
+      border-radius: 1rem !important;
+    }
+
+    /* 页面进度条 */
+    .progress-bar {
+      background-image: linear-gradient(-225deg, rgb(144, 125, 252) 0%, rgb(229, 191, 182) 100%);
+      top: 0;
+      position: fixed;
+      height: 4px;
+      left: 0;
+    }
+
+    .comment .comments {
+      padding: 5px 0 0 15px !important;
+    }
+
+    .content:hover {
+      background-image: linear-gradient(-225deg, rgba(144, 125, 252, 0.120) 0%, rgb(229, 191, 182, 0) 100%);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 菜单栏 -->
+  <header class="navbar-fixed right-align" data-aos="fade-down" data-aos-duration="800">
+    <a href="/" class="blog-logo" style="z-index: 998;">K</a>
+    <div id="sidebarSwitch" class="sidebar-switch hide">
+      <span class="fa fa-navicon"></span>
+    </div>
+    <ul id="mHeader" class="layui-nav" style="background-color:rgba(0, 0, 0, 0);">
+      <li class="layui-nav-item">
+        <a href="/" class="font-size-16">首页</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/category" class="font-size-16">专栏</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/archives" class="font-size-16">归档</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/about" class="font-size-16">关于</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/login" class="font-size-16">登录</a>
+      </li>
+    </ul>
+  </header>
+
+  <!-- 封面预览图 -->
+  <div class="large z-depth-4" data-aos="fade-down" data-aos-duration="1000">
+    <div class="large-header">
+      <div class="mask"></div>
+      <div class="large-title large-center sidebar-font">
+        <input type="hidden" id="abAid" value="123" th:value="${blog?.abAid}"></input>
+        <h3 th:text="${blog?.abTitle}">中文网页重设与排版：Typo.css</h3>
+        <h6 th:text="${blog?.abSynopsis}">一致化浏览器排版效果，构建最适合中文阅读的网页排版 一致化浏览器排版效果，构建最适合中文阅读的网页排版</h6>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主体 -->
+  <main id="mMain" class="container">
+    <div class="row">
+      <!-- 正文 -->
+      <div id="mContent" class="col s12 m12 l10">
+        <div class="card" style="padding: 1em 2em;" data-aos="fade-right" data-aos-duration="1000">
+          <i>
+            阅读人数：
+            <span th:text="${blog?.detailedInfo?.adViews}">0</span>
+          </i>
+          <i>
+            发布日期：
+            <span th:text="${#strings.substring(blog?.abPublishDate,0,10)}">2020-11-25</span>
+            </i>
+        </div>
+        <div class="card" data-aos="zoom-in-up" data-aos-duration="800">
+          <div id="wrapper" class="typo typo-selection" th:utext="${blog?.detailedInfo?.adContent}">
+
+            <h1>中文网页重设与排版：<i class="serif">Typo.css</i></h1><br />
+
+            <h2 id="tagline" class="serif">一致化浏览器排版效果，构建最适合中文阅读的网页排版</h2>
+
+            <ol id="table">
+              <li><a href="#section1">关于 <i class="serif">Typo.css</i></a></li>
+              <li><a href="#section2">排版实例</a>
+                <ul>
+                  <li><a href="#section2-1">例1：论语学而篇第一</a></li>
+                  <li><a href="#section2-2">例2：英文排版</a></li>
+                </ul>
+              </li>
+              <li><a href="#section3">附录</a>
+                <ul>
+                  <li><a href="#appendix1"><i class="serif">Typo.css</i> 排版偏重点</a></li>
+                  <li><a href="#appendix2">开源许可</a></li>
+                </ul>
+              </li>
+            </ol>
+
+            <h2 id="section1">一、关于 <i class="serif">Typo.css</i></h2>
+            
+            <p>
+              <img class="enlargePicture" alt="sd"  src="../static/medias/featureimages/2.jpg" data-src="../static/medias/featureimages/2.jpg">
+            </p>
+            <p>
+              <img class="enlargePicture" alt="sd" src="https://picsum.photos/id/1023/1920/1080" data-src="https://picsum.photos/id/1023/1920/1080">
+            </p>
+            <p>
+              <img class="enlargePicture" alt="sd" src="https://picsum.photos/id/100/1920/1080" data-src="https://picsum.photos/id/100/1920/1080">
+            </p>
+            <p><i class="serif">Typo.css</i> 的目的是，在一致化浏览器排版效果的同时，构建最适合中文阅读的网页排版。</p>
+            <h4>现状和如何去做：</h4>
+
+            <p class="typo-first">排版是一个麻烦的问题 <sup><a href="#appendix1">#
+                  附录一</a></sup>，需要精心设计，而这个设计却是常被视觉设计师所忽略的。前端工程师更常看到这样的问题，但不便变更。因为在多个 OS
+              中的不同浏览器渲染不同，改动需要多的时间做回归测试，所以改变变得更困难。而像我们一般使用的
+              Yahoo、Eric Meyer 和 Alice base.css 中采用的 Reset 都没有很好地考虑中文排版。<i class="serif">Typo.css</i> 要做的就是解决中文排版的问题。
+            </p>
+
+            <p><strong><i class="serif">Typo.css</i> 测试于如下平台：</strong></p>
+            <table class="responsive-table" summary="Typo.css 的测试平台列表">
+              <thead>
+                <tr>
+                  <th>OS/浏览器</th>
+                  <th>Firefox</th>
+                  <th>Chrome</th>
+                  <th>Safari</th>
+                  <th>Opera</th>
+                  <th>IE9</th>
+                  <th>IE8</th>
+                  <th>IE7</th>
+                  <th>IE6</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>OS X</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>Win 7</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>Win XP</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>-</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                </tr>
+                <tr>
+                  <td>Ubuntu</td>
+                  <td>✔</td>
+                  <td>✔</td>
+                  <td>-</td>
+                  <td>✔</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4>中文排版的重点和难点</h4>
+
+            <p>在中文排版中，HTML4 的很多标准在语义在都有照顾到。但从视觉效果上，却很难利用单独的 CSS 来实现，像<abbr title="在文字下多加一个点">着重号</abbr>（例：这里<em
+                class="typo-em">强调一下</em>）。在 HTML4 中，专名号标签（<code>&lt;u&gt;</code>）已经被放弃，而
+              HTML5 被<a href="http://html5doctor.com/u-element/">重新提起</a>。<i class="serif">Typo.css</i>
+              也根据实际情况提供相应的方案。我们重要要注意的两点是：</p>
+            <ol>
+              <li>语义：语义对应的用法和样式是否与中文排版一致</li>
+              <li>表现：在各浏览器中的字体、大小和缩放是否如排版预期</li>
+            </ol>
+            <p>对于这些，<i class="serif">Typo.css</i> 排版项目的中文偏重注意点，都添加在附录中，详见：</p>
+            <blockquote>
+              <b>附录一</b>：<a href="#appendix1"><i class="serif">Typo.css</i> 排版偏重点</a>
+            </blockquote>
+
+            <p>目前已有像百姓网等全面使用 <i class="serif">Typo.css</i> 的项目，测试平台的覆盖，特别是在<abbr
+                title="手机、平板电脑等移动平台">移动端</abbr>上还没有覆盖完主流平台，希望有能力的同学能加入测试行列，或者加入到 <i class="serif">Typo.css</i>
+              的开发。加入方法：<a href="https://github.com/sofish/Typo.css">参与 <i class="serif">Typo.css</i>
+                开发</a>。如有批评、建议和意见，也随时欢迎给在 Github 直接提 <a
+                href="https://github.com/sofish/Typo.css/issues">issues</a>，或给<abbr
+                title="Sofish Lin, author of Typo.css" role="author">我</abbr>发<a href="mailto:sofish@icloud.com">邮件</a>。
+            </p>
+
+
+            <h2 id="section2">二、排版实例：</h2>
+
+            <p>提供2个排版实例，第一个中文实例来自于来自于<cite
+                class="typo-unique">张燕婴</cite>的《论语》，由于古文排版涉及到的元素比较多，所以采用《论语》中《学而》的第一篇作为排版实例介绍；第2个来自到经典的
+              Lorem Ipsum，并加入了一些代码和列表等比较具有代表性的排版元素。</p>
+              <h2 id="设计模式">H2 设计模式</h2>
+                <h3 id="UML类图">H3 UML类图</h3>
+                <h3 id="7种设计原则">H3 7种设计原则</h3>
+                <h3 id="单例模式">H3 单例模式</h3>
+                  <h4 id="懒汉方式">H4 懒汉方式</h4>
+                  <h4 id="饿汉方式">H4 饿汉方式</h4>
+                  <h4 id="holder方式">H4 holder方式</h4>
+                  <h4 id="枚举方式">H4 枚举方式</h4>
+                <h3 id="工厂方法模式">asdasdsad</h3>
+                  <h4 id="简单工厂">H4 简单工厂</h4>
+                  <h4 id="工厂方法">H4 工厂方法</h4>
+                  <h4 id="抽象工厂">H4 抽象工厂</h4>
+                  <h4 id="代理模式">H4 代理模式</h4>
+
+            <h3 id="section2-1">例1：论语学而篇第一</h3>
+
+     
+            <p>
+              <small><b>作者：</b><abbr title="名丘，字仲尼">孔子</abbr>（
+                <time>前551年9月28日－前479年4月11日</time>
+                ）
+              </small>
+            </p>
+
+            <h4>本篇引语</h4>
+
+            <p>
+              《学而》是《论语》第一篇的篇名。《论语》中各篇一般都是以第一章的前二三个字作为该篇的篇名。《学而》一篇包括16章，内容涉及诸多方面。其中重点是「吾日三省吾身」；「节用而爱人，使民以时」；「礼之用，和为贵」以及仁、孝、信等道德范畴。
+            </p>
+
+            <h4>原文</h4>
+
+            <p>子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」 </p>
+
+            <h4>译文</h4>
+
+            <p>孔子说：「学了又时常温习和练习，不是很愉快吗？有志同道合的人从远方来，不是很令人高兴的吗？人家不了解我，我也不怨恨、恼怒，不也是一个有德的君子吗？」 </p>
+
+            <h4>评析</h4>
+
+            <p>宋代著名学者<u
+                class="typo-u">朱熹</u>对此章评价极高，说它是「入道之门，积德之基」。本章这三句话是人们非常熟悉的。历来的解释都是：学了以后，又时常温习和练习，不也高兴吗等等。三句话，一句一个意思，前后句子也没有什么连贯性。但也有人认为这样解释不符合原义，指出这里的「学」不是指学习，而是指学说或主张；「时」不能解为时常，而是时代或社会的意思，「习」不是温习，而是使用，引申为采用。而且，这三句话不是孤立的，而是前后相互连贯的。这三句的意思是：自己的学说，要是被社会采用了，那就太高兴了；退一步说，要是没有被社会所采用，可是很多朋友赞同<abbr
+                title="张燕婴">我</abbr>的学说，纷纷到我这里来讨论问题，我也感到快乐；再退一步说，即使社会不采用，人们也不理解我，我也不怨恨，这样做，不也就是君子吗？（见《齐鲁学刊》1986年第6期文）这种解释可以自圆其说，而且也有一定的道理，供读者在理解本章内容时参考。
+            </p>
+
+            <p>
+              此外，在对「人不知，而不愠」一句的解释中，也有人认为，「人不知」的后面没有宾语，人家不知道什么呢？当时因为孔子有说话的特定环境，他不需要说出知道什么，别人就可以理解了，却给后人留下一个谜。有人说，这一句是接上一句说的，从远方来的朋友向我求教，我告诉他，他还不懂，我却不怨恨。这样，「人不知」就是「人家不知道我所讲述的」了。这样的解释似乎有些牵强。
+            </p>
+
+            <p>总之，本章提出以学习为乐事，做到人不知而不愠，反映出孔子学而不厌、诲人不倦、注重修养、严格要求自己的主张。这些思想主张在《论语》书中多处可见，有助于对第一章内容的深入了解。</p>
+
+            <h3 id="section2-2">例2：英文排版</h3>
+
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+              industry's
+              standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
+              to make a
+              type specimen book. It has survived not only five centuries, but also the leap into electronic
+              typesetting, remaining
+              essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
+              Lorem Ipsum
+              passages, and more recently with desktop publishing software like Aldus PageMaker including versions of
+              Lorem
+              Ipsum.</p>
+            <blockquote>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna
+              aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat.
+            </blockquote>
+            <h4>The standard Lorem Ipsum passage, used since the 1500s</h4>
+
+            <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna
+              aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat.
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint
+              occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+
+            <h4>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h4>
+
+            <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+              rem aperiam,
+              eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
+              enim ipsam
+              voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
+              ratione
+              voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+              adipisci
+              velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+              voluptatem. Ut enim
+              ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
+              commodi
+              consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
+              consequatur,
+              vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+
+            <h4>List style in action</h4>
+            <ul>
+              <li>If you wish to succeed, you should use persistence as your good friend, experience as your reference,
+                prudence as
+                your brother and hope as your sentry.
+                <p>如果你希望成功，当以恒心为良友，以经验为参谋，以谨慎为兄弟，以希望为哨兵。</p>
+              </li>
+              <li>Sometimes one pays most for the things one gets for nothing.
+                <p>有时候一个人为不花钱得到的东西付出的代价最高。</p>
+              </li>
+              <li>Only those who have the patience to do simple things perfectly ever acquire the skill to do difficult
+                things
+                easily.
+                <p>只有有耐心圆满完成简单工作的人，才能够轻而易举的完成困难的事。</p>
+              </li>
+            </ul>
+
+            <h4>You may want to create a perfect <code>&lt;hr /&gt;</code> line, despite the fact that there will never
+              have one
+            </h4>
+            <hr>
+            <p><abbr title="法国作家罗切福考尔德">La Racheforcauld</abbr> said:
+              <mark>"Few things are impossible in themselves; and it is often for want of will, rather than of means,
+                that man fails
+                to succeed".
+              </mark>
+              You just need to follow the browser's behavior, and set a right <code>margin</code> to it。it will works
+              nice as the
+              demo you're watching now. The following code is the best way to render typo in Chinese:
+            </p>
+
+            <pre>
+            <code class="language-javascript line-numbers">  function Person(name, age){
+                this.name = name || 'pelli';
+                this.age = age || 18;
+              }
+              
+              Person.prototype.sayHi = function(){
+                console.log('Hi, I am ' + this.name + ', I am ' + this.age + ' years old');
+              };</code>
+          </pre>
+            <h2 id="section3">三、附录</h2>
+
+            <h5 id="appendix1">1、<i class="serif">Typo.css</i> 排版偏重点</h5>
+            <table class="responsive-table" summary="Typo.css 排版偏重点">
+              <thead>
+                <tr>
+                  <th>类型</th>
+                  <th>语义</th>
+                  <th>标签</th>
+                  <th>注意点</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th rowspan="15">基础标签</th>
+                  <td>标题</td>
+                  <td><code>h1</code> ～ <code>h6</code></td>
+                  <td>全局不强制大小，<code>.typo</code> 中标题与其对应的内容应紧贴，并且有相应的大小设置</td>
+                </tr>
+                <tr>
+                  <td>上、下标</td>
+                  <td><code>sup</code>/<code>sub</code></td>
+                  <td>保持与 MicroSoft Office Word 等程序的日常排版一致</td>
+                </tr>
+                <tr>
+                  <td>引用</td>
+                  <td><code>blockquote</code></td>
+                  <td>显示/嵌套样式</td>
+                </tr>
+                <tr>
+                  <td>缩写</td>
+                  <td><code>abbr</code></td>
+                  <td>是否都有下划线，鼠标 <code>hover</code> 是否为帮助手势</td>
+                </tr>
+                <tr>
+                  <td>分割线</td>
+                  <td><code>hr</code></td>
+                  <td>显示的 <code>padding</code> 和 <code>margin</code>正确</td>
+                </tr>
+                <tr>
+                  <td>列表</td>
+                  <td><code>ul</code>/<code>ol</code>/<code>dl</code></td>
+                  <td>在全局没有 <code>list-style</code>，在 .<code>typo</code> 中对齐正确</td>
+                </tr>
+                <tr>
+                  <td>定义列表</td>
+                  <td><code>dl</code></td>
+                  <td>全局 <code>padding</code> 和 <code>margin</code>为0， .<code>typo</code> 中对齐正确</td>
+                </tr>
+                <tr>
+                  <td>选项</td>
+                  <td><code>input[type=radio[, checkbox]]</code></td>
+                  <td>与其他 <code>form</code> 元素排版时是否居中</td>
+                </tr>
+                <tr>
+                  <td>斜体</td>
+                  <td><code>i</code></td>
+                  <td>只设置一种斜体，让 <code>em</code> 和 <code>cite</code> 显示为正体</td>
+                </tr>
+                <tr>
+                  <td>强调</td>
+                  <td><code>em</code></td>
+                  <td>在全局显示正体，在 <code>.typo</code> 中显示与 <code>b</code> 和 <code>strong</code> 的样式一致，为粗体</td>
+                </tr>
+                <tr>
+                  <td>加强</td>
+                  <td><code>strong/b</code></td>
+                  <td>显示为粗体</td>
+                </tr>
+                <tr>
+                  <td>标记</td>
+                  <td><code>mark</code></td>
+                  <td>类似荧光笔</td>
+                </tr>
+                <tr>
+                  <td>印刷</td>
+                  <td><code>small</code></td>
+                  <td>保持为正确字体的 80% 大小，颜色设置为浅灰色</td>
+                </tr>
+                <tr>
+                  <td>表格</td>
+                  <td><code>table</code></td>
+                  <td>全局不显示线条，在 <code>table</code> 中显示表格外框，并且表头有浅灰背景</td>
+                </tr>
+                <tr>
+                  <td>代码</td>
+                  <td><code>pre</code>/<code>code</code></td>
+                  <td>字体使用 <code>courier</code> 系字体，保持与 <code>serif</code> 有比较一致的显示效果</td>
+                </tr>
+                <tr>
+                  <th rowspan="5">特殊符号</th>
+                  <td>着重号</td>
+                  <td><em class="typo-em">在文字下加点</em></td>
+                  <td>在支持 <code>:after</code> 和 <code>:before</code> 的浏览器可以做渐进增强实现</td>
+                </tr>
+                <tr>
+                  <td>专名号</td>
+                  <td><u>林建锋</u></td>
+                  <td>专名号，有下划线，使用 <code>u</code> 或都 <code>.typo-u</code> 类</td>
+                </tr>
+                <tr>
+                  <td>破折号</td>
+                  <td>——</td>
+                  <td>保持一划，而非两划</td>
+                </tr>
+                <tr>
+                  <td>人民币</td>
+                  <td>¥</td>
+                  <td>使用两平等线的符号，或者 HTML 实体符号 <code>&amp;yen;</code></td>
+                </tr>
+                <tr>
+                  <td>删除符</td>
+                  <td>
+                    <del>已删除（deleted）</del>
+                  </td>
+                  <td>一致化各浏览器显示，中英混排正确</td>
+                </tr>
+                <tr>
+                  <th rowspan="3">加强类</th>
+                  <td>专名号</td>
+                  <td><code>.typo-u</code></td>
+                  <td>由于 <code>u</code> 被 HTML4 放弃，在向后兼容上推荐使用 <code>.typo-u</code></td>
+                </tr>
+                <tr>
+                  <td>着重符</td>
+                  <td><code>.typo-em</code></td>
+                  <td>利用 <code>:after</code> 和 <code>:before</code> 实现着重符</td>
+                </tr>
+                <tr>
+                  <td>清除浮动</td>
+                  <td><code>.clearfix</code></td>
+                  <td>与一般 CSS Reset 保持一对致 API</td>
+                </tr>
+                <tr>
+                  <th rowspan="5">注意点</th>
+                  <td colspan="3">（1）中英文混排行高/行距</td>
+                </tr>
+                <tr>
+                  <td colspan="3">（2）上下标在 IE 中显示效果</td>
+                </tr>
+                <tr>
+                  <td colspan="3">（3）块/段落分割空白是否符合设计原则</td>
+                </tr>
+                <tr>
+                  <td colspan="3">（4）input 多余空间问题</td>
+                </tr>
+                <tr>
+                  <td colspan="3">（5）默认字体色彩，目前采用 <code>#333</code> 在各种浏览显示比较好</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h5 id="appendix2">2、开源许可</h5>
+
+            <p><i class="serif">Typo.css</i> 基于 <a href="http://zh.wikipedia.org/wiki/MIT_License">MIT License</a>
+              开源，使用代码只需说明来源，或者引用 <a href="http://typo.sofi.sh/license.txt">license.txt</a> 即可。</p>
+          </div>
+        </div>
+      </div>
+      <!-- 目录 -->
+      <div class="col l2 catalog-hide">
+        <div id="mCatalog" class="content-margin catalog"  data-aos="fade-left"  data-aos-duration="1000" style="padding: 0;">
+          <h3 class="title"><i class="fa fa-book fa-fw"></i>目录</h3>
+          <ul id="catalogList" class="catalogList page-progress">
+          </ol>
+        </div>
+      </div>
+
+      <style>
+        .comment .actions{
+          top: 8px !important;
+        }
+        .content .author{
+          color: rgb(135, 171, 248) !important;
+        }
+        .content .author:hover{
+          color: #B8B6E5 !important;
+        }
+      </style>
+      <!-- 评论 -->
+      <div class="col s12 m12 l10" data-aos="zoom-in-up" data-aos-duration="800">
+        <div class="card">
+          <div class="card-content">
+            <div class="ui minimal comments" style="max-width: 100% !important;">
+              <h3 class="ui dividing header"><i class="fa fa-comments fa-fw"></i> 评论</h3>
+                <form class="layui-form layui-form-pane reply" action="" lay-filter="commentsForm">
+                  <!-- 昵称 -->
+                  <div class="layui-col-sm4 layui-col-md4">
+                    <div class="layui-form-item">
+                      <input name="cuUsername" lay-verify="username" type="text" autocomplete="off" placeholder="昵称" class="layui-input">
+                    </div>
+                  </div>
+                   <!-- 邮箱  lay-verify="email" -->
+                   <div class="layui-col-sm4 layui-col-md4">
+                    <div class="layui-form-item">
+                       <input name="cuEmail" type="text" autocomplete="off" placeholder="邮箱" class="layui-input">
+                     </div>
+                  </div>
+                  <!-- 网址(http://) -->
+                  <div class="layui-col-sm4 layui-col-md4">
+                   <div class="layui-form-item">
+                      <input name="cuWebsite" lay-verify="website" type="text" autocomplete="off" placeholder="网址(http://)" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <textarea name="cContent"  lay-verify="content"
+                    placeholder="请输入回复内容" class="layui-textarea reply-text" style="margin-top: 0px; margin-bottom: 15px; height: 202px; "></textarea>
+                  </div>
+                  <div style="text-align: right;">
+                    <a type="button" class="layui-btn m-button btn-reply" lay-submit=""
+                    lay-filter="btnRelease1">回复</a>
+                  </div>
+                </form>
+              <h5 class="ui dividing header" th:text="${commentCount} + ' 评论'">2 评论</h5>
+              <!--  -->
+              <div th:if="${#lists.isEmpty(comments)}" style="text-align: center;">
+                暂无评论,快来评论吧
+              </div>
+              <div th:if="${not #lists.isEmpty(comments)}" class="comment" th:each="comment : ${comments}">
+                <input type="hidden" class="cid" value="123" th:value="${comment?.fatherComment?.commentInfo?.cCid}"></input>
+                <a class="avatar">
+                  <img src="../static/medias/featureimages/IMG_20191104_151907.jpg">
+                </a>
+                <div class="content">
+                  <span class="username1" th:value="${comment?.fatherComment?.sendUser?.cuUid}" value="123">
+                    <a class="author" th:text="${comment?.fatherComment?.sendUser?.cuUsername}">张三</a>
+                  </span>
+                  <div class="metadata">
+                    <span class="date" th:text="${comment?.fatherComment?.commentInfo?.cDate}">昨天上午12:30</span>
+                  </div>
+                  <div class="text">
+                    <p th:text="${comment?.fatherComment?.commentInfo?.cContent}">這對我的研究是非常有用.謝謝!這對我的研究是非常有用.謝謝!這對我的研究是非常有這對我的研究是非常有用.謝謝!這對我的研究是非常有用.謝謝!用.謝謝!</p>
+                  </div>
+                  <div class="actions">
+                    <a class="reply">回复</a>
+                  </div>
+                </div>
+                <div th:if="${not #lists.isEmpty(comment?.childComments)}" class="comments">
+                  <div class="comment" th:each="childComment : ${comment?.childComments}">
+                    <a class="avatar">
+                      <img src="../static/medias/featureimages/IMG_20191104_151907.jpg">
+                    </a>
+                    <div class="content">
+                      <div id="replyUserInfo" style="display: inline-block;">
+                        <span class="username1" th:value="${childComment?.sendUser?.cuUid}" value="1234">
+                          <a class="author" th:text="${childComment?.sendUser?.cuUsername}">李四</a>
+                        </span>
+                        <span>回复</span>
+                        <span class="username2" th:value="${childComment?.replyUser?.cuUid}" value="123">
+                          <a class="author" th:text="${childComment?.replyUser?.cuUsername}">张三</a>
+                        </span>
+                      </div>
+                      <div id="replyDate" class="metadata">
+                        <span class="date" th:text="${childComment?.commentInfo?.cDate}">刚刚</span>
+                      </div>
+                      <div  class="text" th:text="${childComment?.commentInfo?.cContent}">艾略特你永远是多么正确 :) </div>
+                      <div class="actions">
+                        <a class="reply">回复</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <form class="layui-form layui-form-pane reply-from animated fadeInDown hide"  action="" lay-filter="commentsForm">
+                  <!-- 昵称  lay-verify="email" -->
+                  <div class="layui-col-sm4 layui-col-md4">
+                    <div class="layui-form-item">
+                      <input name="cuUsername" lay-verify="username" type="text" autocomplete="off" placeholder="昵称" class="layui-input">
+                    </div>
+                  </div>
+                   <!-- 邮箱 -->
+                   <div class="layui-col-sm4 layui-col-md4">
+                    <div class="layui-form-item">
+                       <input name="cuEmail" type="text" autocomplete="off" placeholder="邮箱" class="layui-input">
+                     </div>
+                  </div>
+                  <!-- 网址(http://) -->
+                  <div class="layui-col-sm4 layui-col-md4">
+                   <div class="layui-form-item">
+                      <input name="cuWebsite" lay-verify="website" type="text" autocomplete="off" placeholder="网址(http://)" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <textarea name="cContent"  lay-verify="content"
+                    placeholder="请输入回复内容" class="layui-textarea  reply-text" style="margin-top: 0px; margin-bottom: 15px; height: 202px; "></textarea>
+                  </div>
+                  <div style="text-align: right;">
+                    <a type="button" class="layui-btn m-button btn-reply" lay-submit="" lay-filter="btnRelease2">回复</a>
+                    <a type="button" class="layui-btn m-button btn-retract">收起</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 底部栏 -->
+  <footer id="mFooter" class="z-depth-5 footer-backgroud">
+    <div class="container center-align">
+      <p>
+        Copyright © 2020
+        <a href="/">kongsheng.top</a>
+        All Rights Reserved KS
+      </p>
+      <!-- &nbsp; | &nbsp; -->
+      <!-- <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" style="margin-bottom: 3px;"> -->
+      <a href="http://www.beian.miit.gov.cn/" class="beian" target="_blank">浙ICP备20016905号</a>
+    </div>
+  </footer>
+
+  <!-- 侧边菜单 -->
+  <a href="#" data-activates="slide-out" class="button-collapse"></a>
+  <ul id="slide-out" class="side-nav sidebar-backgroud">
+    <li><a class="waves-effect" href="/">首页</a></li>
+    <li><a class="waves-effect" href="/category">专栏</a></li>
+    <li><a class="waves-effect" href="/archives">归档</a></li>
+    <li><a class="waves-effect" href="/about">关于</a></li>
+    <li><a class="waves-effect" href="/login">登录</a></li>
+  </ul>
+  
+  <div class="right-button">
+    <!-- 菜单 -->
+    <div id="mMenu" class="mMenu fixed-action-btn animated bounceInRight">
+      <a class="btn-floating btn-large arrow-up-backgroud">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </a>
+    </div>
+    <!-- 返回顶部按钮 -->
+    <div id="arrowUp" class="arrowUp fixed-action-btn animated bounceInRight">
+      <a class="btn-floating btn-large arrow-up-backgroud">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- 页面进度条 -->
+  <div class="progress-bar"></div>
+  
+  <script src="../static/js/jquery-3.4.1.min.js" th:src="@{../static/js/jquery-3.4.1.min.js}"></script>
+  <script src="../static/lib/aos/aos.js" charset="utf-8"></script>
+  <script src="../static/lib/layui/layui.js" charset="utf-8"></script>
+  <script src="../static/lib/semantic/semantic.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../static/lib/materialize/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../static/mod/lightgallery/js/lightgallery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../static/mod/lightgallery/js/lg-pager.js"></script>
+  <script src="../static/mod/lightgallery/js/lg-autoplay.js"></script>
+  <script src="../static/mod/lightgallery/js/lg-fullscreen.js"></script>
+  <script src="../static/mod/lightgallery/js/lg-zoom.js"></script>
+  <script src="../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../static/lib/prism/prism.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../static/js/catalog.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../static/lib/scrollProgress/scrollProgress.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" th:inline="javascript">
+    $(function () {
+      $("#wrapper img").each(function (index) {
+        var img = $(this);
+        img.attr("data-src", img.attr("src"));
+        img.addClass("enlargeImage");
+      });
+      // 初始化大图预览器
+      lightGallery(document.getElementById('wrapper'), {
+        mode: "lg-fade",
+        selector: '.enlargeImage'
+      });
+
+
+      largeImageInfo();
+      // 设置封面图
+      function largeImageInfo() {
+        /*<![CDATA[*/
+        var abCoverImage = /*[[${blog?.abCoverImage}]]*/ null;
+        /*]]>*/
+        if (abCoverImage == null || abCoverImage == '') {
+          return;
+        }
+        $(".large-header").css("background-image", "url(" + abCoverImage + ")");
+      }
+
+
+      var user1 = null, user2 = null, cId = null;
+      // 聊天列表回复按钮监听
+      $(".actions .reply").click(function () {
+        user1 = user2 = null;
+        var replyFrom = $(this).parent().parent().parent().find($('.reply-from'));
+        if (replyFrom.length <= 0) {
+          replyFrom = $(this).parent().parent().parent().parent().parent().find($('.reply-from'));
+        }
+        var cIdItem = $(this).parent().parent().parent().find($('.cid'));
+        if (cIdItem.length <= 0) {
+          cIdItem = $(this).parent().parent().parent().parent().parent().find($('.cid'));
+        }
+        cId = cIdItem.val();
+
+        var author = $(this).parent().parent().find($('.username1'));
+        if (author.length > 0) {
+          user1 = {
+            "uid": author.attr("value"),
+            "username": author.find($('.author')).text()
+          }
+        }
+
+        author = $(this).parent().parent().find($('.username2'));
+        if (author.length > 0) {
+          user2 = {
+            "uid": author.attr("value"),
+            "username": author.find($('.author')).text()
+          }
+        }
+
+        replyFrom.removeClass("hide");
+        replyFrom.find($('.reply-text')).attr('placeholder', "@" + user1["username"]);
+        replyFrom.find($('.reply-text'))[0].focus();
+      });
+
+      // 聊天列表回复栏收起按钮监听
+      $(".reply-from .btn-retract").click(function () {
+        $(this).parent().parent().addClass("hide");
+      });
+
+      // 聊天栏回复按钮监听
+      layui.use(['form'], function () {
+        var form = layui.form;
+        form.verify({
+          username: [/[\S]+/, "昵称不可为空!"],
+          // username: [/[\S]+/, "文章标题不可为空!"],
+          // username: [/[\S]+/, "文章标题不可为空!"],
+          content: [/[\S]+/, "回复内容不可为空!"]
+        });
+
+        form.on('submit(btnRelease1)', function (data) {
+          var commentInfo = HandleData(data.field);
+          var requestsData = {
+            "commentInfo": {
+              "cAid": $("#abAid").val(),
+              "cLikeCount": "0",
+              "cContent": commentInfo["cContent"]
+            },
+            "sendUser": {
+              "cuUsername": commentInfo["cuUsername"],
+              "cuEmail": commentInfo["cuEmail"],
+              "cuWebsite": commentInfo["cuWebsite"],
+            }
+          };
+          addCommentAjax(requestsData, $(this).parent().parent());
+        });
+
+        form.on('submit(btnRelease2)', function (data) {
+          var commentInfo = HandleData(data.field);
+          var requestsData = {
+            "commentInfo": {
+              "cAid": $("#abAid").val(),
+              "cLikeCount": "0",
+              "cContent": commentInfo["cContent"],
+              "cFatherCid": cId,
+              "cReplyUid": user1["uid"]
+            },
+            "sendUser": {
+              "cuUsername": commentInfo["cuUsername"],
+              "cuEmail": commentInfo["cuEmail"],
+              "cuWebsite": commentInfo["cuWebsite"],
+            },
+            "replyUser": {
+              "cuUid": user1["uid"],
+              "cuUsername": user1["username"]
+            }
+          };
+          addCommentAjax(requestsData, $(this).parent().parent());
+        });
+
+        function addCommentAjax(requestsData, replyFrom) {
+          $.ajax({
+            type: "post",
+            url: "/blog/addComment",
+            // traditional: true,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(requestsData),
+            success: function (responseData) {
+              if (responseData.code == 200) {
+                ShowMessage(responseData.message, "success");
+                window.location.reload();
+                return;
+              }
+              ShowMessage("回复失败,请重试.", "error");
+              if (user1 != null || user2 != null) {
+                replyFrom.addClass("hide");
+                user1 = user2 = null;
+              }
+            },
+            error: function () {
+              ShowMessage("回复失败,请重试.", "error");
+
+              if (user1 != null || user2 != null) {
+                replyFrom.addClass("hide");
+                user1 = user2 = null;
+              }
+            }
+          });
+          form.val("commentsForm", {
+            "cuUsername": null,
+            "cContent": null,
+            "cuEmail": null,
+            "cuWebsite": null
+          });
+        }
+
+        function ShowMessage(msg, strIcon) {
+          var icon = 1;
+          if (strIcon == "error") {
+            icon = 2;
+          } else if (strIcon == "none") {
+            layer.msg(msg, {
+              time: 1000
+            });
+            return;
+          }
+          layer.msg(msg, {
+            icon: icon,
+            time: 1000
+          });
+        }
+      });
+
+      function HandleData(data) {
+        if (data.cuEmail == "") {
+          delete data.cuEmail;
+        }
+        if (data.cuWebsite == "") {
+          delete data.cuWebsite;
+        }
+        return data;
+      }
+
+      setCatalogTop();
+      createCatalog();
+
+      // 滚动进度
+      setTimeout(function () {
+        var progressBar = document.querySelector('.progress-bar');
+        function onProgress(x, y) {
+          progressBar.style.width = y * 100 + '%';
+        }
+        self.progressObserver = new ScrollProgress(onProgress);
+      }, 100);
+
+      $("#catalogList a").click(function () {
+        // setThisItem($(this));
+        $("html, body").animate({
+          scrollTop: $($(this).attr("href")).offset().top - 20 + "px"
+        }, 500);
+        return false;
+      });
+
+      $(window).scroll(function () {
+        setCatalogTop();
+      });
+
+      /**
+       * 判断目录是否跟随滚动条
+       */
+      function setCatalogTop() {
+        var scrollTop = formatZero($(document).scrollTop());
+        if ((scrollTop) >= ($("#mMain").position().top) + 5) {
+          $("#mCatalog").addClass("catalog-fixed");
+        } else {
+          $("#mCatalog").removeClass("catalog-fixed");
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

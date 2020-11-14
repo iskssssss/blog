@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eternity.blog.system.mapper.IBlogMapper">
+    <resultMap id="ArticleBasicMap" type="com.eternity.blog.system.domain.blog.ArticleBasicModel">
+        <id property="abAid" column="ab_aid" />
+        <result property="abTitle" column="ab_title" />
+        <result property="abSynopsis" column="ab_synopsis" />
+        <result property="abCoverImage" column="ab_cover_image" />
+        <result property="abUid" column="ab_uid" />
+        <result property="abPublish" column="ab_publish" />
+        <result property="abPublishDate" column="ab_publish_date" />
+        <result property="abUpdateDate" column="ab_update_date" />
+        <association property="detailedInfo" javaType="com.eternity.blog.system.domain.blog.ArticleDetailedModel"
+                     resultMap="ArticleDetailedMap" />
+        <association property="userInfo" javaType="com.eternity.blog.system.domain.user.UserModel"
+                     resultMap="com.eternity.blog.system.mapper.IUserMapper.UserMap" />
+    </resultMap>
+
+    <resultMap id="ArticleDetailedMap" type="com.eternity.blog.system.domain.blog.ArticleDetailedModel">
+        <id property="adAid" column="ad_aid" />
+        <result property="adContent" column="ad_content" />
+        <result property="adType" column="ad_type" />
+        <result property="adOpenComment" column="ad_open_comment" />
+        <result property="adOpenRecommend" column="ad_open_recommend" />
+        <result property="adLikeCount" column="ad_like_count" />
+        <result property="adViews" column="ad_views" />
+<!--        <result property="adCommentCount" column="ad_comment_count" />-->
+        <result property="adTop" column="ad_top" />
+    </resultMap>
+
+
+    <insert id="insertBlogBasicInfo" parameterType="com.eternity.blog.system.domain.blog.ArticleBasicModel">
+        REPLACE INTO b_article_basic (
+            b_article_basic.ab_aid,
+            <if test="abTitle != null">b_article_basic.ab_title,</if>
+            <if test="abSynopsis != null">b_article_basic.ab_synopsis,</if>
+            <if test="abCoverImage != null">b_article_basic.ab_cover_image,</if>
+            b_article_basic.ab_uid,
+            <if test="abPublish != null">b_article_basic.ab_publish,</if>
+            <if test="abPublishDate != null and abPublishDate != ''">b_article_basic.ab_publish_date,</if>
+            b_article_basic.ab_update_date
+        ) VALUES (
+            #{abAid},
+            <if test="abTitle != null">#{abTitle},</if>
+            <if test="abSynopsis != null">#{abSynopsis},</if>
+            <if test="abCoverImage != null">#{abCoverImage},</if>
+            #{abUid},
+            <if test="abPublish != null">#{abPublish},</if>
+            <if test="abPublishDate != null">#{abPublishDate},</if>
+            #{abUpdateDate}
+        )
+    </insert>
+
+    <insert id="insertBlogDetailedInfo" parameterType="com.eternity.blog.system.domain.blog.ArticleDetailedModel">
+        REPLACE INTO b_article_detailed(
+        <if test="adContent != null">b_article_detailed.ad_content,</if>
+        <if test="adType != null">b_article_detailed.ad_type,</if>
+        <if test="adOpenComment != null">b_article_detailed.ad_open_comment,</if>
+        <if test="adOpenRecommend != null">b_article_detailed.ad_open_recommend,</if>
+        <if test="adLikeCount != null">b_article_detailed.ad_like_count,</if>
+        <if test="adViews != null">b_article_detailed.ad_views,</if>
+<!--        <if test="adCommentCount != null">b_article_detailed.ad_comment_count,</if>-->
+        <if test="adTop != null">b_article_detailed.ad_top,</if>
+        b_article_detailed.ad_aid
+        ) VALUES (
+        <if test="adContent != null">#{adContent},</if>
+        <if test="adType != null">#{adType},</if>
+        <if test="adOpenComment != null">#{adOpenComment},</if>
+        <if test="adOpenRecommend != null">#{adOpenRecommend},</if>
+        <if test="adLikeCount != null">#{adLikeCount},</if>
+        <if test="adViews != null">#{adViews},</if>
+<!--        <if test="adCommentCount != null">#{adCommentCount},</if>-->
+        <if test="adTop != null">#{adTop},</if>
+        #{adAid}
+        )
+    </insert>
+
+    <insert id="insertBlogSortInfo">
+        INSERT INTO b_article_sort (
+        b_article_sort.as_sid,
+        b_article_sort.as_aid
+        ) VALUES (
+        #{sId},#{aId}
+        )
+    </insert>
+
+    <insert id="insertBlogLabelInfo">
+        INSERT INTO b_article_labels (
+        b_article_labels.al_lid,
+        b_article_labels.al_aid
+        ) VALUES (
+        #{lId},#{aId}
+        )
+    </insert>
+
+    <update id="updateBlogBasicInfo">
+        UPDATE b_article_basic
+        SET
+        <if test="abTitle != null">b_article_basic.ab_title = #{abTitle},</if>
+        <if test="abSynopsis != null">b_article_basic.ab_synopsis = #{abSynopsis},</if>
+        <if test="abCoverImage != null">b_article_basic.ab_cover_image = #{abCoverImage},</if>
+        <if test="abUid != null">b_article_basic.ab_uid = #{abUid},</if>
+        <if test="abPublish != null">b_article_basic.ab_publish = #{abPublish},</if>
+        <if test="abPublishDate != null and abPublishDate != ''">b_article_basic.ab_publish_date = #{abPublishDate},</if>
+        b_article_basic.ab_update_date = #{abUpdateDate}
+        WHERE b_article_basic.ab_aid = #{abAid}
+    </update>
+
+    <update id="updateBlogDetailedInfo">
+        UPDATE b_article_detailed
+        SET
+        <if test="adContent != null">b_article_detailed.ad_content = #{adContent},</if>
+        <if test="adType != null">b_article_detailed.ad_type = #{adType},</if>
+        <if test="adOpenComment != null">b_article_detailed.ad_open_comment = #{adOpenComment},</if>
+        <if test="adOpenRecommend != null">b_article_detailed.ad_open_recommend = #{adOpenRecommend},</if>
+        <if test="adLikeCount != null">b_article_detailed.ad_like_count = #{adLikeCount},</if>
+        <if test="adViews != null">b_article_detailed.ad_views = #{adViews},</if>
+        <if test="adCommentCount != null">b_article_detailed.ad_comment_count = #{adCommentCount},</if>
+        <if test="adTop != null">b_article_detailed.ad_top = #{adTop},</if>
+        b_article_detailed.ad_aid = #{adAid}
+        WHERE b_article_detailed.ad_aid = #{adAid}
+    </update>
+
+    <update id="increaseBlogViewsByAid">
+        UPDATE b_article_detailed
+        SET
+        b_article_detailed.ad_views = b_article_detailed.ad_views + 1
+        WHERE b_article_detailed.ad_aid = #{aid}
+    </update>
+
+    <delete id="deleteBlogBasicInfoByAid" parameterType="long">
+        DELETE FROM
+        b_article_basic
+        WHERE
+        b_article_basic.ab_aid = #{aid}
+    </delete>
+
+    <delete id="deleteBlogDetailedInfoByAid" parameterType="long">
+        DELETE FROM
+        b_article_detailed
+        WHERE
+        b_article_detailed.ad_aid = #{aid}
+    </delete>
+
+    <delete id="deleteAllBlogSortInfo" parameterType="long">
+        DELETE FROM b_article_sort WHERE b_article_sort.as_aid = #{aid}
+    </delete>
+
+    <delete id="deleteAllBlogLabelInfo" parameterType="long">
+        DELETE FROM b_article_labels WHERE b_article_labels.al_aid = #{aid}
+    </delete>
+
+    <delete id="deleteBlogSortInfo">
+        DELETE FROM b_article_sort WHERE b_article_sort.as_aid = #{aId} AND b_article_sort.as_sid = #{sId}
+    </delete>
+
+    <delete id="deleteBlogLabelInfo">
+        DELETE FROM b_article_labels WHERE b_article_labels.al_aid = #{aId} AND b_article_labels.al_lid = #{lId}
+    </delete>
+
+    <select id="selectManagementShowInfo" resultMap="ArticleBasicMap">
+        <!-- 博文ID 标题 发布人 类型 更新时间 发布时间-->
+        SELECT
+        b_article_basic.ab_aid,
+        b_article_basic.ab_title,
+        b_article_basic.ab_uid,
+        b_article_basic.ab_publish,
+        b_article_detailed.ad_type,
+        b_article_basic.ab_publish_date,
+        b_article_basic.ab_update_date
+        FROM
+        b_article_basic
+        INNER JOIN b_article_detailed ON b_article_basic.ab_aid = b_article_detailed.ad_aid
+        ORDER BY b_article_basic.ab_publish_date DESC LIMIT #{page}, #{limit}
+    </select>
+
+    <select id="selectAllCount" resultType="long">
+        SELECT COUNT(1) FROM b_article_basic
+    </select>
+
+    <select id="checkBlogByAid" resultType="int">
+        SELECT COUNT(1) FROM b_article_basic WHERE b_article_basic.ab_aid = #{aid}
+    </select>
+
+    <select id="selectBlogInfoByAid" parameterType="long" resultMap="ArticleBasicMap">
+        SELECT
+            b_article_basic.ab_aid,
+            b_article_basic.ab_title,
+            b_article_basic.ab_synopsis,
+            b_article_basic.ab_cover_image,
+            b_article_basic.ab_uid,
+            b_article_basic.ab_publish_date,
+<!--            &#45;&#45; b_article_basic.ab_update_date,-->
+            b_article_basic.ab_publish,
+            b_article_detailed.ad_content,
+            b_article_detailed.ad_type,
+            b_article_detailed.ad_open_comment,
+            b_article_detailed.ad_open_recommend,
+<!--            b_article_detailed.ad_like_count,-->
+            b_article_detailed.ad_views,
+<!--            b_article_detailed.ad_comment_count,-->
+            b_article_detailed.ad_top
+        FROM
+        b_article_basic
+        INNER JOIN b_article_detailed ON b_article_basic.ab_aid = b_article_detailed.ad_aid
+        WHERE
+        b_article_basic.ab_aid = #{aid}
+    </select>
+
+    <select id="selectBlogSortInfo" resultMap="com.eternity.blog.system.mapper.ISortMapper.SortMap">
+        SELECT
+        b_sorts.s_sid, b_sorts.s_name
+        FROM b_article_sort
+        INNER JOIN b_sorts ON b_article_sort.as_sid = b_sorts.s_sid
+        WHERE b_article_sort.as_aid = #{aid}
+    </select>
+
+    <select id="selectBlogLabelInfo" resultMap="com.eternity.blog.system.mapper.ILabelMapper.LabelMap">
+        SELECT
+        b_labels.l_lid, b_labels.l_name
+        FROM b_article_labels
+        INNER JOIN b_labels ON b_article_labels.al_lid = b_labels.l_lid
+        WHERE b_article_labels.al_aid = #{aid}
+    </select>
+
+    <select id="selectPublicShowInfo" resultMap="ArticleBasicMap">
+        SELECT
+        b_article_basic.ab_aid,
+        b_article_basic.ab_title,
+        u_users.u_uid,
+        u_users.u_nickname,
+        b_article_basic.ab_cover_image,
+        b_article_basic.ab_synopsis,
+        b_article_basic.ab_publish_date,
+        b_article_detailed.ad_views
+        FROM
+        b_article_basic
+        INNER JOIN b_article_detailed ON b_article_detailed.ad_aid = b_article_basic.ab_aid
+        INNER JOIN u_users ON b_article_basic.ab_uid = u_users.u_uid
+        WHERE b_article_basic.ab_publish = 1
+        ORDER BY b_article_basic.ab_publish_date DESC LIMIT #{page}, #{limit}
+    </select>
+</mapper>

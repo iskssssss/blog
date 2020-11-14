@@ -1,0 +1,59 @@
+.font-size-16 {
+  font-size: 16px;
+}
+
+header {
+  height: 0px !important;
+}
+
+header .blog-logo {
+  position: absolute;
+  color: #fff;
+  display: inline-block;
+  font-size: 2.1rem;
+  padding: 0;
+  white-space: nowrap;
+  top: 8px;
+}
+
+.sidebar-switch {
+  height: 0px !important;
+  line-height: 0px !important;
+  position: absolute;
+  right: 0;
+  padding: 12px 16px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 32px;
+}
+
+@media (min-width: 992px) {
+  header .blog-logo {
+    left: 20px;
+    /* -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); */
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  header .blog-logo {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+
+  header ul {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
+.layui-nav .layui-this:after,
+.layui-nav-bar,
+.layui-nav-tree .layui-nav-itemed:after {
+  background-color: rgb(211, 211, 211);
+}
+
+.layui-nav-child {
+  left: -2px;
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>后台管理</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="../../../static/lib/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../static/lib/materialize/materialize.min.css" media="all">
+  <link rel="stylesheet" href="../../../static/lib/font-awesome/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" href="../../../static/lib/animate/animate.min.css" media="all">
+  <link rel="stylesheet" href="../../../static/css/system/common.css" media="all">
+  <link rel="stylesheet" href="../../../static/css/header.css" media="all">
+  <link rel="stylesheet" href="../../../static/css/largeImage.css" media="all">
+
+</head>
+
+<body>
+  <!-- 菜单栏  -->
+  <header class="navbar-fixed right-align">
+    <a href="/system" class="blog-logo" style="z-index: 998;">管理后台</a>
+    <div id="sidebarSwitch" class="sidebar-switch hide">
+      <span class="fa fa-navicon"></span>
+    </div>
+    <ul id="mHeader" class="layui-nav" style="background-color:rgba(0, 0, 0, 0);">
+      <li class="layui-nav-item">
+        <a href="/system/blogs" class="font-size-16">博客管理</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/system/sorts" class="font-size-16">分类管理</a>
+      </li>
+      <li class="layui-nav-item layui-this">
+        <a href="/system/labels" class="font-size-16 ">标签管理</a>
+      </li>
+      <li class="layui-nav-item">
+        <a th:href="@{/logout}" class="font-size-16">退出</a>
+      </li>
+    </ul>
+  </header>
+
+  <!-- 封面预览图 -->
+  <div class="large z-depth-4" data-aos="fade-down" data-aos-duration="1000">
+    <div class="large-header">
+      <div class="mask"></div>
+      <div class="large-title large-center sidebar-font">
+        <h5>标签管理</h5>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主体 -->
+  <main id="mMain">
+    <div class="container">
+      <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <table class="layui-hide" id="mLabelTable" lay-filter="mLabelTable"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 侧边菜单 -->
+  <a href="#" data-activates="slide-out" class="button-collapse"></a>
+  <ul id="slide-out" class="side-nav sidebar-backgroud">
+    <li><a class="waves-effect" href="/system/blogs">博客管理</a></li>
+    <li><a class="waves-effect" href="/system/sorts">分类管理</a></li>
+    <li><a class="waves-effect" href="/system/labels">标签管理</a></li>
+  </ul>
+
+  <!-- 菜单 -->
+  <div id="mMenu" class="fixed-action-btn animated bounceInRight" style="bottom: 90px; right: 15px;">
+    <a class="btn-floating btn-large arrow-up-backgroud">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <!-- 返回顶部按钮 -->
+  <div id="arrowUp" class="fixed-action-btn animated bounceInRight" style="right: 15px;">
+    <a class="btn-floating btn-large arrow-up-backgroud">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <!-- 头部功能按钮 -->
+  <script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <a class="layui-btn layui-btn-sm m-button" lay-event="addLabel">添加标签</a>
+      <a class="layui-btn layui-btn-sm m-button" lay-event="mReload">刷新</a>
+    </div>
+  </script>
+
+  <!-- 表格功能按钮 -->
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+  <script src="../../../static/js/jquery-3.4.1.min.js" charset="utf-8"></script>
+  <script src="../../../static/lib/layui/layui.js" charset="utf-8"></script>
+  <script src="../../../static/lib/materialize/materialize.min.js" charset="utf-8"></script>
+  <script src="../../../static/js/common.js" charset="utf-8"></script>
+  <script src="../../../static/js/label.js" charset="utf-8"></script>
+
+</body>
+
+</html>

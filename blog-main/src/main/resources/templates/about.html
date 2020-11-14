@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>关于 - K</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="../static/lib/aos/aos.css" media="all">
+  <link rel="stylesheet" href="../static/lib/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../static/lib/materialize/materialize.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/font-awesome/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/animate/animate.min.css" media="all">
+  <link rel="stylesheet" href="../static/css/common.css" media="all">
+  <link rel="stylesheet" href="../static/css/header.css" media="all">
+  <link rel="stylesheet" href="../static/css/largeImage.css" media="all">
+
+</head>
+
+<body>
+
+  <!-- 菜单栏 -->
+  <header class="navbar-fixed right-align" data-aos="fade-down" data-aos-duration="800">
+    <a href="/" class="blog-logo" style="z-index: 998;">K</a>
+    <div id="sidebarSwitch" class="sidebar-switch hide">
+      <span class="fa fa-navicon"></span>
+    </div>
+    <ul id="mHeader" class="layui-nav" style="background-color:rgba(0, 0, 0, 0);">
+      <li class="layui-nav-item">
+        <a href="/" class="font-size-16">首页</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/category" class="font-size-16">专栏</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/archives" class="font-size-16">归档</a>
+      </li>
+      <li class="layui-nav-item layui-this">
+        <a href="/about" class="font-size-16">关于</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/login" class="font-size-16">登录</a>
+      </li>
+    </ul>
+  </header>
+
+  <!-- 封面预览图 -->
+  <div class="large z-depth-4" data-aos="fade-down" data-aos-duration="1000">
+    <div class="large-header">
+      <div class="mask"></div>
+    </div>
+  </div>
+
+  <style>
+    .content-margin {
+      margin: 20px 0 0 0;
+    }
+
+    .simple-info {
+      margin: 20px 0 0 0;
+    }
+
+    .info-nickname {
+      font-size: 36px;
+      line-height: 0px;
+    }
+
+    .info-email {
+      font-size: 20px;
+      line-height: 0;
+      margin: 1.9em 0 0.5em 0;
+    }
+
+    .brief-info {
+      padding: 1px 20px 20px 20px;
+    }
+  </style>
+  <!-- 主体 -->
+  <main id="mMain">
+    <div class="container">
+      <div class=" col s12 m5 l4">
+        <div class="card-content content-margin">
+          <div class="container" style="min-height: 160px; min-width: 160px; max-height: 160px; max-width: 160px;">
+            <img style="min-height: 160px; min-width: 160px; max-height: 160px; max-width: 160px;"
+              src="../static/medias/featureimages/IMG_20191104_151907.jpg" alt=""
+              class="circle responsive-img am-img-thumbnail">
+          </div>
+          <div class="center-align simple-info">
+            <p class="info-nickname" th:text="${user.uNickname}">test</p>
+            <p class="info-email" th:text="${user.uEmail}">test</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class=" col s12 m7 l8 brief-info">
+          <div class="content-margin">
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 底部栏 -->
+  <footer id="mFooter" class="z-depth-5 footer-backgroud">
+    <div class="container center-align">
+      <p>
+        Copyright © 2020
+        <a href="/">kongsheng.top</a>
+        All Rights Reserved KS
+      </p>
+      <!-- &nbsp; | &nbsp; -->
+      <!-- <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" style="margin-bottom: 3px;"> -->
+      <a href="http://www.beian.miit.gov.cn/" class="beian" target="_blank">浙ICP备20016905号</a>
+    </div>
+  </footer>
+
+  <!-- 侧边菜单 -->
+  <a href="#" data-activates="slide-out" class="button-collapse"></a>
+  <ul id="slide-out" class="side-nav sidebar-backgroud">
+    <li><a class="waves-effect" href="/">首页</a></li>
+    <li><a class="waves-effect" href="/category">专栏</a></li>
+    <li><a class="waves-effect" href="/archives">归档</a></li>
+    <li><a class="waves-effect" href="/about">关于</a></li>
+    <li><a class="waves-effect" href="/login">登录</a></li>
+  </ul>
+
+  <div class="right-button">
+    <!-- 菜单 -->
+    <div id="mMenu" class="mMenu fixed-action-btn animated bounceInRight">
+      <a class="btn-floating btn-large arrow-up-backgroud">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </a>
+    </div>
+    <!-- 返回顶部按钮 -->
+    <div id="arrowUp" class="arrowUp fixed-action-btn animated bounceInRight">
+      <a class="btn-floating btn-large arrow-up-backgroud">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Jquery -->
+  <script src="../static/js/jquery-3.4.1.min.js" th:src="@{../static/js/jquery-3.4.1.min.js}"></script>
+
+  <!-- masonry 瀑布流布局库 -->
+  <script src="../static/js/masonry.pkgd.min.js" charset="utf-8"></script>
+
+  <!-- AOS -->
+  <script src="../static/lib/aos/aos.js" charset="utf-8"></script>
+
+  <!-- LayUI -->
+  <script src="../static/lib/layui/layui.js" charset="utf-8"></script>
+
+  <!-- Materialize -->
+  <script src="../static/lib/materialize/materialize.min.js" charset="utf-8"></script>
+
+
+  <script src="../static/js/common.js" charset="utf-8"></script>
+</body>
+
+</html>

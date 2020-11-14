@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>归档 - K</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="../static/lib/aos/aos.css" media="all">
+  <link rel="stylesheet" href="../static/lib/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../static/lib/materialize/materialize.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/font-awesome/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/animate/animate.min.css" media="all">
+  <link rel="stylesheet" href="../static/css/common.css" media="all">
+  <link rel="stylesheet" href="../static/css/header.css" media="all">
+  <link rel="stylesheet" href="../static/css/largeImage.css" media="all">
+
+  <style>
+    main {
+      margin-top: 32px !important;
+      max-width: 910px !important;
+    }
+
+    .brief-info {
+      padding: 10px 20px;
+    }
+
+    .archives-item {
+      position: relative;
+    }
+
+    .archives-content {
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    @media (min-width: 992px) {
+      .archives-item:before {
+        background-color: #a8a8a8;
+        content: "";
+        height: 100%;
+        left: -30px;
+        position: absolute;
+        top: 0;
+        width: 2px;
+      }
+
+      .brief-info:before {
+        top: 13px;
+        left: -35px;
+        width: 12px;
+        border: 1px solid #adabac;
+        height: 11px;
+        content: "";
+        z-index: 2;
+        position: absolute;
+        border-radius: 50%;
+        background-color: #fff;
+      }
+
+      .archives-content:before {
+        border-right-color: #a1a1a18c !important;
+        z-index: 1;
+      }
+
+      .archives-content:after {
+        border-right-color: #fff !important;
+        margin-left: 1px;
+        z-index: 2;
+      }
+
+      .archives-content:after,
+      .archives-content:before {
+        top: 10px;
+        left: -8px;
+        right: 100%;
+        width: 0;
+        height: 0;
+        display: block;
+        content: "";
+        position: absolute;
+        border-color: transparent;
+        border-style: solid solid outset;
+        border-width: 8px 8px 8px 0;
+        pointer-events: none;
+      }
+    }
+
+    .archives-main {
+      margin-bottom: 1em;
+    }
+
+    .archives-catalogList {
+      padding-left: 8px !important;
+    }
+
+    .archives-catalogList li {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .archives-catalogList li a {
+      color: black !important;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgb(0, 0, 0);
+      line-height: 24px;
+    }
+
+    .archives-catalogList li a:hover {
+      color: rgb(129, 129, 129) !important;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgb(129, 129, 129);
+    }
+
+    .archives-item a {
+      color: black !important;
+    }
+
+    .archives-item a:hover {
+      color: rgb(129, 129, 129) !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 菜单栏 -->
+  <header class="navbar-fixed right-align" data-aos="fade-down" data-aos-duration="800">
+    <a href="/" class="blog-logo" style="z-index: 998;">K</a>
+    <div id="sidebarSwitch" class="sidebar-switch hide">
+      <span class="fa fa-navicon"></span>
+    </div>
+    <ul id="mHeader" class="layui-nav" style="background-color:rgba(0, 0, 0, 0);">
+      <li class="layui-nav-item">
+        <a href="/" class="font-size-16">首页</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/category" class="font-size-16">专栏</a>
+      </li>
+      <li class="layui-nav-item layui-this">
+        <a href="/archives" class="font-size-16">归档</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/about" class="font-size-16">关于</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/login" class="font-size-16">登录</a>
+      </li>
+    </ul>
+  </header>
+
+  <!-- 封面预览图 -->
+  <div class="large z-depth-4" data-aos="fade-down" data-aos-duration="1000">
+    <div class="large-header">
+      <div class="mask"></div>
+    </div>
+  </div>
+
+  <!-- 主体 -->
+  <main id="mMain" class="container">
+    <div class="row">
+      <div class="col l3">
+        <div id="mCatalog" class="content-margin catalog" style="padding: 0;" data-aos="zoom-in-right">
+          <h5><i class="fa fa-calendar fa-fw"></i>日期</h5>
+          <ul class="archives-catalogList">
+            <li th:each="archivesDate : ${archivesDateList}">
+              <a href="#" th:href="'http://kongsheng.top/archives/' + ${archivesDate?.archivesDate}"
+                th:text="${archivesDate?.archivesDate} + '(' + ${archivesDate?.archivesCount} + ')'">2020年5月(5)</a>
+            </li>
+        </div>
+      </div>
+
+      <div class="col s12 m12 l9 archives-main">
+        <div class="archives-list">
+
+          <div class="archives-item" th:each="blogInfo : ${blogInfoList}" data-aos="fade-right" data-aos-offset="300"
+            data-aos-easing="ease-in-sine">
+            <header style="margin: 2em 0;" th:text="${blogInfo?.archivesDate}">
+              2020-5-20
+            </header>
+            <a th:each="articles : ${blogInfo.articleBasicList}" th:href="'/blog/' + ${articles?.abAid}">
+              <div class="archives-content card">
+                <div class="brief-info">
+                  <p th:text="${articles?.abTitle}">10:25:18 一个小菜比</p>
+                </div>
+              </div>
+            </a>
+            <div style="height: 1px;"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 底部栏 -->
+  <footer id="mFooter" class="z-depth-5 footer-backgroud">
+    <div class="container center-align">
+      <p>
+        Copyright © 2020
+        <a href="/">kongsheng.top</a>
+        All Rights Reserved KS
+      </p>
+      <!-- &nbsp; | &nbsp; -->
+      <!-- <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" style="margin-bottom: 3px;"> -->
+      <a href="http://www.beian.miit.gov.cn/" class="beian" target="_blank">浙ICP备20016905号</a>
+    </div>
+  </footer>
+
+  <!-- 侧边菜单 -->
+  <a href="#" data-activates="slide-out" class="button-collapse"></a>
+  <ul id="slide-out" class="side-nav sidebar-backgroud">
+    <li><a class="waves-effect" href="/">首页</a></li>
+    <li><a class="waves-effect" href="/category">专栏</a></li>
+    <li><a class="waves-effect" href="/archives">归档</a></li>
+    <li><a class="waves-effect" href="/about">关于</a></li>
+    <li><a class="waves-effect" href="/login">登录</a></li>
+  </ul>
+
+  <div class="right-button">
+    <!-- 菜单 -->
+    <div id="mMenu" class="mMenu fixed-action-btn animated bounceInRight">
+      <a class="btn-floating btn-large arrow-up-backgroud">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </a>
+    </div>
+    <!-- 返回顶部按钮 -->
+    <div id="arrowUp" class="arrowUp fixed-action-btn animated bounceInRight">
+      <a class="btn-floating btn-large arrow-up-backgroud">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+
+  <script src="../static/js/jquery-3.4.1.min.js" th:src="@{../static/js/jquery-3.4.1.min.js}"></script>
+  <script src="../static/js/masonry.pkgd.min.js" charset="utf-8"></script>
+  <script src="../static/lib/aos/aos.js" charset="utf-8"></script>
+  <script src="../static/lib/layui/layui.js" charset="utf-8"></script>
+  <script src="../static/lib/materialize/materialize.min.js" charset="utf-8"></script>
+  <script src="../static/js/common.js" charset="utf-8"></script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #00000070;
+  padding: 0px;
+  margin: 0;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+nav .nav-wrapper i {
+  line-height: 34px;
+}
+
+.prefix {
+  margin: 12px 0 0 -2px;
+}
+
+.container {
+  max-width: 350px;
+}
+
+.validate {
+  margin-left: 2.5em !important;
+}
+
+.row {
+  margin-bottom: 0px !important;
+}
+
+.btn {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.checkbox {
+  display: unset !important;
+  padding-left: 25px !important;
+}
+
+p {
+  margin-top: 0;
+}
+
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 输入框样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+/* 输入框文本颜色 */
+.input-field label {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* 文本框获取焦点后颜色 */
+.input-field input[type=text]:focus+label,
+.input-field input[type=password]:focus+label {
+  color: #B9B6E5;
+}
+
+/*文本框获取焦点后线颜色 */
+.input-field input[type=text]:focus,
+.input-field input[type=password]:focus {
+  border-bottom: 1px solid #B9B6E5;
+  box-shadow: 0 1px 0 0 #B9B6E5;
+}
+
+/* 文本框获取焦点后图标颜色 */
+.input-field .prefix.active {
+  color: #B9B6E5;
+}
+
+/* 成功后的颜色 */
+.input-field input[type=text].valid {
+  border-bottom: 1px solid rgb(0, 201, 0);
+  box-shadow: 0 1px 0 0 rgb(0, 201, 0);
+}
+
+/* 失败后的颜色 */
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid rgb(201, 0, 0);
+  box-shadow: 0 1px 0 0 rgb(201, 0, 0);
+}
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 输入框样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+
+
+
+.large,
+.large-header {
+  height: 100% !important;
+}
+
+.materialize label,
+.materialize i,
+.materialize a,
+.materialize input {
+  color: aliceblue;
+}
+
+.materialize a:hover,
+.materialize .checkbox span:hover {
+  color: rgb(151, 151, 151);
+}
+
+.materialize .checkbox:after {
+  border: 2px solid #ffffff !important;
+  top: -1px !important;
+}
+
+[type="checkbox"].filled-in:checked+label:after {
+  background-color: #ffffff !important;
+}
+
+.large-title h3 {
+  margin: 0;
+}

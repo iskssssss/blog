@@ -1,0 +1,90 @@
+blog:
+  version: 1.0.0
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 800
+    min-spare-threads: 30
+
+spring:
+  mvc:
+    favicon:
+      enabled: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    cache: false
+  # 国际化
+  messages:
+    encoding: UTF-8
+    basename: static/i18n/messages
+  # 加载数据库配置
+  profiles:
+    active: druid
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  redis:
+    # Redis 数据库索引
+    database: 0
+    # Redis 服务器地址
+    host: 127.0.0.1
+    # Redis 服务器端口
+    port: 6379
+    # Redis 服务器连接密码
+    password: 34112500
+    # 连接池设置
+    pool:
+      # 最大连接数量 -1无限制
+      max-active: 8
+      # 最大阻塞等待时间 -1无限制
+      max-wait: -1
+      # 最大空闲连接
+      max-idle: 8
+      # 最小空闲连接
+      min-idle: 0
+    # 连接超时时间
+    timeout: 1000
+# myBatis
+mybatis:
+  type-aliases-package: com.eternity.**.domain
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+
+# Shiro
+shiro:
+  user:
+    # 登陆地址
+    loginUrl: /login
+    # 首页地址
+    indexUrl: /index
+    # 退出登陆后访问地址
+    logoutUrl: /
+  cookie:
+    # 域名（为空时，即当前访问的域名）
+    domain:
+    # 有效访问路径
+    path: /
+    # 仅http访问
+    httpOnly: true
+    # 过期时间（天）
+    maxAge: 7
+
+  session:
+    # session 过期时间（分钟）
+    expireTime: 30
+    # 会话验证周期（分钟）
+    validateSessionsPeriod: 1
+    # 同步周期（分钟）
+    syncPeriod: 1

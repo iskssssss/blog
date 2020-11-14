@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eternity.blog.system.mapper.IArchivesMapper">
+    <resultMap id="ArchivesMap" type="com.eternity.blog.system.domain.blog.ArchivesModel">
+        <result property="archivesDate" column="archives_date" />
+        <result property="archivesCount" column="archives_count" />
+    </resultMap>
+
+    <select id="selectBlogArchivesByDate" resultMap="ArchivesMap">
+        SELECT
+        date_format(b_article_basic.ab_publish_date,'%Y年%m月') as archives_date,
+        COUNT(date_format(b_article_basic.ab_publish_date,'%Y年%m月')) as archives_count
+        FROM
+        b_article_basic
+        GROUP BY date_format(b_article_basic.ab_publish_date,'%Y年%m月')
+        ORDER BY archives_date DESC
+    </select>
+
+    <select id="selectBlogInfoListByDate" parameterType="string" resultMap="com.eternity.blog.system.mapper.IBlogMapper.ArticleBasicMap">
+        SELECT
+        b_article_basic.ab_aid,
+        b_article_basic.ab_title,
+        b_article_basic.ab_publish_date
+        FROM
+        b_article_basic
+        INNER JOIN b_article_detailed ON b_article_basic.ab_aid = b_article_detailed.ad_aid
+        WHERE b_article_basic.ab_publish_date LIKE #{date}
+        ORDER BY b_article_basic.ab_publish_date ASC
+    </select>
+
+</mapper>

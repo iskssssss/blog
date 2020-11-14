@@ -1,0 +1,9 @@
+
+i
+java:S1192b"GDefine a constant instead of duplicating this literal "/login" 3 times.(Æçøÿÿÿÿ8Ğµœé˜.
+L
+java:S2093M"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8˜–çî .
+o
+java:S1128"RRemove this unused import 'org.springframework.context.annotation.PropertySource'.(™¢˜é8Íæû‚£.
+Q
+java:S1874T"4Remove this use of "closeQuietly"; it is deprecated.(©‰âº8¯‡¨‘¡.

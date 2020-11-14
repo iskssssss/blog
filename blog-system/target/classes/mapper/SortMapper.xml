@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eternity.blog.system.mapper.ISortMapper">
+    <resultMap id="SortMap" type="com.eternity.blog.system.domain.blog.SortModel">
+        <id property="sSid" column="s_sid" />
+        <result property="sName" column="s_name" />
+        <result property="sAlias" column="s_alias" />
+        <result property="sDescription" column="s_description" />
+        <result property="sAddDate" column="s_add_date" />
+    </resultMap>
+
+    <insert id="insertSort" parameterType="com.eternity.blog.system.domain.blog.SortModel">
+        INSERT INTO
+        b_sorts (
+        b_sorts.s_sid,
+        b_sorts.s_name,
+        <if test="sAlias != null and sAlias != ''">b_sorts.s_alias,</if>
+        <if test="sDescription != null and sDescription != ''">b_sorts.s_description,</if>
+        b_sorts.s_add_date
+        ) VALUES (
+        #{sSid},
+        #{sName},
+        <if test="sAlias != null and sAlias != ''">#{sAlias},</if>
+        <if test="sDescription != null and sDescription != ''">#{sDescription},</if>
+        #{sAddDate}
+        )
+    </insert>
+    <update id="updateSort" parameterType="com.eternity.blog.system.domain.blog.SortModel">
+        UPDATE b_sorts
+        SET
+        <if test="sName != null and sName != ''">b_sorts.s_name = #{sName}</if>
+        <if test="((sName != null and sName != '') and sAlias       != null) or
+                  ((sName != null and sName != '') and sDescription != null)">,</if>
+        <if test="sAlias != null">b_sorts.s_alias = #{sAlias}</if>
+        <if test="sAlias != null and sDescription != null">,</if>
+        <if test="sDescription != null">b_sorts.s_description = #{sDescription}</if>
+        WHERE
+        b_sorts.s_sid = #{sSid}
+    </update>
+    <delete id="deleteSortByLid" parameterType="long">
+        DELETE FROM
+        b_sorts
+        WHERE
+        b_sorts.s_sid = #{lId}
+    </delete>
+
+    <select id="selectAll" parameterType="long" resultMap="SortMap">
+        SELECT
+        b_sorts.s_sid, b_sorts.s_name,
+        b_sorts.s_alias, b_sorts.s_description
+        FROM
+        b_sorts
+        ORDER BY b_sorts.s_name ASC
+    </select>
+    <select id="selectAllCount" resultType="long">
+        SELECT COUNT(1) FROM b_sorts
+    </select>
+    <select id="selectLimit" resultMap="SortMap">
+        <!--        SELECT * FROM b_sorts-->
+        <!--        WHERE s_add_date <= (SELECT s_add_date FROM b_sorts ORDER BY s_add_date DESC LIMIT 0, 1)-->
+        <!--        ORDER BY s_add_date DESC-->
+        <!--        LIMIT 5-->
+        SELECT * FROM b_sorts ORDER BY s_add_date DESC LIMIT #{page}, #{limit}
+    </select>
+    <select id="checkSortByName" parameterType="string" resultType="int">
+        SELECT
+        COUNT(1)
+        FROM
+        b_sorts
+        WHERE b_sorts.s_name = #{sName}
+    </select>
+    <select id="checkSortById" parameterType="long" resultType="int">
+    SELECT
+        COUNT(1)
+        FROM
+        b_sorts
+        WHERE b_sorts.s_sid = #{sId}
+    </select>
+
+    <select id="checkSortUse" resultType="int">
+        SELECT COUNT(1) FROM b_article_sort WHERE b_article_sort.as_sid = #{sId}
+    </select>
+
+</mapper>

@@ -1,0 +1,381 @@
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓  全局样式  ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+html,
+body {
+  height: 100%;
+  background: url(../../static/img/_backgroud.gif);
+  padding: 0px;
+  margin: 0;
+  font: 14px Helvetica Neue, Helvetica, PingFang SC, Tahoma, Arial, sans-serif;
+}
+
+main {
+  min-height: 60%;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+
+
+/* 巨幕高度 */
+.carousel {
+  height: 20em !important;
+}
+
+/* 巨幕标题位置 */
+.caption {
+  top: 40% !important;
+}
+
+
+/* 隐藏 */
+.hide {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* 巨幕遮罩 */
+.mask {
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  width: 100%;
+  height: 100%;
+  opacity: 0.5 !important;
+}
+
+/* .layui-form-checked[lay-skin=primary] i {
+  border-color: #5FB878 !important;
+  color: #fff;
+} */
+
+/*               颜色 */
+/* 菜单栏 */
+.header-backgroud,
+/* 侧边菜单 */
+.sidebar-backgroud,
+/* 底栏 */
+.footer-backgroud,
+/* 回到顶部 */
+.arrow-up-backgroud,
+/* 分页页数 */
+.pagination-page-active,
+/* 分页按钮 */
+.pagination-btn-backgroud,
+/* 卡片背景 */
+.card-backgroud,
+/* 提示框 */
+.toast,
+/* 按钮 */
+.m-button,
+[type="checkbox"].filled-in:checked+label:after {
+  background-image: linear-gradient(-225deg, #7DE2FC 0%, #B9B6E5 100%) !important;
+  /* background-image: linear-gradient(-225deg, rgb(226, 226, 226) 0%, rgb(165, 165, 165) 100%) !important; */
+}
+
+/* 透明度 */
+/* 底部信息栏 */
+.footer-backgroud {
+  opacity: 1 !important;
+}
+
+/* 菜单栏 */
+nav {
+  opacity: 1 !important;
+}
+
+.header-backgroud {
+  opacity: 1 !important;
+}
+
+/* 侧边栏 */
+.sidebar-backgroud {
+  opacity: 0.9 !important;
+}
+
+/* 卡片 */
+.card-backgroud {
+  opacity: 1 !important;
+}
+
+/* 返回顶部 */
+.arrow-up-backgroud {
+  opacity: 0.9 !important;
+}
+
+/* 分页按钮 */
+.pagination-btn-backgroud {
+  opacity: 1 !important;
+}
+
+/* 点击 */
+/* span {
+  cursor: pointer;
+} */
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑  全局样式  ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 菜单栏样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 菜单栏样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 轮播图样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+.indicators {
+  z-index: 0 !important;
+}
+
+.sidebar-font {
+  line-height: 1.4em;
+  color: rgb(255, 255, 255) !important;
+}
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 轮播图样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 底部栏样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+footer {
+  /* width: 100%; */
+  /* height: 50px; */
+  text-align: center !important;
+  padding: 10px 8px 8px 8px !important;
+}
+
+/* 任务栏置底 */
+.footer-button {
+  width: 100% !important;
+  /* height: 100px !important; */
+  position: fixed !important;
+  bottom: 0 !important;
+}
+
+footer p,
+footer a {
+  margin: 0;
+  line-height: 16px !important;
+}
+
+footer p,
+footer a {
+  font-size: 12px;
+}
+
+.beian {
+  /* color: #000; */
+  margin-top: 8px !important;
+}
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 底部栏样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 侧边框样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+/* 宽度 */
+.side-nav {
+  width: 250px;
+}
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 侧边框样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓  卡片样式  ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+/* 流排列父项 */
+.article-main {
+  right: 0px;
+}
+
+/* 流排列子项 */
+.article-item {
+  right: 0px;
+}
+
+/* 分割线间距 */
+.divider {
+  margin: 5px 0px 5px 0px !important;
+}
+
+/* 文章简介行数控制 */
+.line-clamp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* 卡片主题 */
+.card-main {
+  border-radius: 20px !important;
+}
+
+/* 卡片图片 */
+.card-image-item {
+  max-height: 245px;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+/* 文章基本信息 */
+.card-content {
+  border-radius: 20px !important;
+  padding: 10px 15px 30px 15px !important;
+}
+
+/* 文章标题和图片 */
+.card-title {
+  padding: 0px !important;
+  margin: 15px;
+  line-height: 1.2 !important;
+  word-break: break-all !important;
+}
+
+/* 文章数据信息 */
+.card-action {
+  /* border-radius: 0px 0px 20px 20px !important; */
+  padding-top: 2px !important;
+  padding-bottom: 8px !important;
+}
+
+/* 详细信息开关 */
+.card-switch {
+  cursor: pointer;
+  margin: 0px;
+}
+
+/* 卡片详细信息背景 */
+.card-reveal {
+  top: 102% !important;
+  height: 105% !important;
+  padding: 15px 15px 10px 15px !important;
+}
+
+/* 标签 */
+.chip {
+  /* background-color: rgb(255, 255, 255); */
+  opacity: 0.9 !important;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+/* 文章标签 */
+.chip-reveal-list {
+  margin-top: 42px !important;
+  cursor: pointer;
+}
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑  卡片样式  ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓  动态样式  ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+
+@media (max-width: 750px) {
+  .card-title {
+    font-size: 20px !important;
+  }
+}
+
+
+@media (min-width: 992px) {
+  .div-left {
+    width: 75%;
+    float: left;
+  }
+
+  .div-right {
+    width: 25%;
+    float: right;
+  }
+
+  .card-title {
+    font-size: 24px !important;
+  }
+}
+
+
+@media (max-width: 992px) {
+  .div-left {
+    width: 100%;
+  }
+
+  .div-right {
+    width: 100%;
+  }
+}
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑  动态样式  ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 提示框样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 提示框样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓  悬浮样式  ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+.fixed-action-btn {
+  z-index: 998 !important;
+  right: 12px;
+}
+
+.right-button .mMenu {
+  bottom: 56px;
+  /* right: 15px; */
+}
+
+.right-button .arrowUp {
+  bottom: 12px;
+  /* right: 12px; */
+}
+
+.right-button a {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.right-button i {
+  font-size: 16px;
+  position: relative;
+  top: -12px;
+}
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑  悬浮样式  ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 输入框样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 输入框样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 输入框样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 输入框样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 输入框样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 输入框样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/
+/* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 输入框样式 ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
+
+
+/* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 输入框样式 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+/********************************************************************************/

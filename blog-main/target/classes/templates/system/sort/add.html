@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>添加分类 - eternity</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+  <!-- LayUI -->
+  <link rel="stylesheet" th:href="@{../../static/lib/layui/css/layui.css}" media="all">
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    .right {
+      float: right !important;
+    }
+
+    .mItem .layui-form-label {
+      width: 74px !important;
+    }
+
+    .mItem .layui-input-block {
+      margin-left: 74px !important;
+    }
+  </style>
+</head>
+<!-- style="padding: 9px 0px 9px 0px; color: black; width: 48px; font-size: 16px;" -->
+
+<body>
+  <div style="padding: 20px 20px 20px 20px;">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12 layui-form-pane">
+        <!-- <div class="layui-card"> -->
+        <div class="layui-form-item mItem">
+          <label class="layui-form-label">名称：</label>
+          <div class="layui-input-block">
+            <input id="sName" type="text" name="title" autocomplete="off" placeholder="请输入分类名称" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item mItem">
+          <label class="layui-form-label">别名：</label>
+          <div class="layui-input-block">
+            <input id="sAlias" type="text" name="title" autocomplete="off" placeholder="请输入分类别名" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">描述：</label>
+          <div class="layui-input-block">
+            <textarea id="sDescription" placeholder="请输入分类描述" class="layui-textarea"></textarea>
+          </div>
+        </div>
+        <div class="layui-form-item right">
+          <a id="modify" type="button" class="layui-btn">添加</a>
+          <a id="cancel" type="button" class="layui-btn">取消</a>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Jquery -->
+  <script src="../../static/js/jquery-3.4.1.min.js" th:src="@{../../static/js/jquery-3.4.1.min.js}" charset="utf-8">
+  </script>
+  <!-- LayUI -->
+  <script src="../../static/lib/layui/layui.js" th:src="@{../../static/lib/layui/layui.js}" charset="utf-8"></script>
+
+  <script type="text/javascript" th:inline="javascript">
+    var pText = "添加";
+    var getUrl = "/sort/addSort";
+    var mSid = "";
+
+    var oldName = '',
+      oldAlias = '',
+      oldDescription = '';
+
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    $('#modify').on('click', function () {
+      var sName = $('#sName').val();
+      var sAlias = $('#sAlias').val();
+      var sDescription = $('#sDescription').val();
+      // console.info(oldName + ' ' + oldAlias + ' ' + oldDescription);
+      // console.info(sName + ' ' + sAlias + ' ' + sDescription);
+      if (sName == "") {
+        parent.layer.msg('分类名称不可为空.', {
+          icon: 2,
+          time: 800
+        });
+        return;
+      }
+
+      var data = {};
+      // var changeCount = 0;
+      if (oldName != sName) {
+        data['sName'] = sName;
+      }
+      if (oldAlias != sAlias) {
+        data['sAlias'] = sAlias;
+      }
+      if (oldDescription != sDescription) {
+        data['sDescription'] = sDescription;
+      }
+      if ($.isEmptyObject(data)) {
+        parent.layer.msg('未改变.', {
+          time: 600
+        });
+        parent.layer.close(index);
+        return;
+      }
+      if (pText == '修改') {
+        data['sSid'] = mSid;
+      }
+
+      $.ajax({
+        type: "get",
+        url: getUrl,
+        data: data,
+        success: function (data) {
+          console.info(data);
+          if (data.code == 200) {
+            parent.layer.msg(data.message, {
+              icon: 1,
+              time: 800
+            });
+            parent.layer.close(index);
+            parent.reload();
+            return;
+          }
+          parent.layer.msg(data.message, {
+            icon: 2,
+            time: 800
+          });
+        },
+        error: function () {
+          parent.layer.msg(pText + '失败,请重试.', {
+            icon: 2,
+            time: 800
+          });
+
+        }
+      });
+    });
+
+    $('#cancel').click(function () {
+      parent.layer.msg('已取消', {
+        time: 600
+      });
+      parent.layer.close(index);
+    });
+
+    function setInfo(name, alias, description) {
+      oldName = name;
+      oldAlias = (alias == null ? '' : alias);
+      oldDescription = (description == null ? '' : description);
+
+      $("#sName").attr("value", name);
+      $("#sAlias").attr("value", alias);
+      $("#sDescription").text(description);
+    }
+
+    function setModify(text, url) {
+      $("#modify").text(text);
+      pText = text;
+      getUrl = url;
+    }
+
+
+    function setSid(sId) {
+      mSid = sId;
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="blog-framework" />
+        <module name="blog-common" />
+        <module name="blog-system" />
+        <module name="blog-main" />
+        <module name="blog-quartz" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="blog" target="1.8" />
+      <module name="blog-common" target="1.8" />
+      <module name="blog-framework" target="1.8" />
+      <module name="blog-main" target="1.8" />
+      <module name="blog-quartz" target="1.8" />
+      <module name="blog-system" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="blog" options="" />
+      <module name="blog-common" options="" />
+      <module name="blog-framework" options="" />
+      <module name="blog-main" options="" />
+      <module name="blog-quartz" options="" />
+      <module name="blog-system" options="" />
+    </option>
+  </component>
+</project>

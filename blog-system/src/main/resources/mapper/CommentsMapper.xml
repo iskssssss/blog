@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eternity.blog.system.mapper.ICommentsMapper">
+    <resultMap id="CommentsMap" type="com.eternity.blog.system.domain.blog.CommentsModel">
+        <id property="cCid" column="c_cid" />
+        <result property="cUid" column="c_uid" />
+        <result property="cAid" column="c_aid" />
+        <result property="cLikeCount" column="c_like_count" />
+        <result property="cDate" column="c_date" />
+        <result property="cContent" column="c_content" />
+        <result property="cFatherCid" column="c_father_cid" />
+        <result property="cReplyUid" column="c_reply_uid" />
+        <association property="commentsUser" javaType="com.eternity.blog.system.domain.blog.CommentsUserModel" resultMap="CommentsUserMap" />
+    </resultMap>
+
+    <resultMap id="CommentsUserMap" type="com.eternity.blog.system.domain.blog.CommentsUserModel">
+        <id property="cuUid" column="cu_uid" />
+        <result property="cuUsername" column="cu_username" />
+        <result property="cuEmail" column="cu_email" />
+        <result property="cuWebsite" column="cu_website" />
+    </resultMap>
+    <insert id="insertComment">
+        INSERT INTO
+        b_comments (
+            b_comments.c_uid,
+            b_comments.c_aid,
+            b_comments.c_like_count,
+            b_comments.c_content,
+            <if test="cFatherCid != null and cFatherCid != ''">
+                b_comments.c_father_cid,
+                b_comments.c_reply_uid,
+            </if>
+            b_comments.c_date
+        ) VALUES (
+            #{cUid},
+            #{cAid},
+            #{cLikeCount},
+            #{cContent},
+            <if test="cFatherCid != null and cFatherCid != ''">
+            #{cFatherCid},
+            #{cReplyUid},
+            </if>
+            #{cDate}
+        )
+    </insert>
+
+    <insert id="insertCommentUser">
+        INSERT INTO
+        b_comments_user (
+            b_comments_user.cu_username,
+            <if test="cuEmail != null and cuEmail != ''">
+                b_comments_user.cu_email,
+            </if>
+            <if test="cuWebsite != null and cuWebsite != ''">
+                b_comments_user.cu_website,
+            </if>
+            b_comments_user.cu_uid
+        ) VALUES (
+            #{cuUsername},
+            <if test="cuEmail != null and cuEmail != ''">
+                #{cuEmail},
+            </if>
+            <if test="cuWebsite != null and cuWebsite != ''">
+                #{cuWebsite},
+            </if>
+            #{cuUid}
+        )
+    </insert>
+
+    <delete id="deleteCommentByAid" parameterType="long">
+        DELETE FROM b_comments WHERE b_comments.c_aid = #{aId}
+    </delete>
+
+    <delete id="deleteCommentByCid" parameterType="long">
+        DELETE FROM b_comments WHERE b_comments.c_cid = #{cId} OR b_comments.c_father_cid = #{cId}
+    </delete>
+
+    <select id="selectFatherCommentsByAid" parameterType="long" resultMap="CommentsMap">
+        SELECT * FROM b_comments
+        WHERE
+        b_comments.c_aid = #{aId}
+        AND b_comments.c_father_cid IS NULL
+        ORDER BY b_comments.c_date DESC
+    </select>
+
+    <select id="selectChildCommentsByAid" resultMap="CommentsMap">
+        SELECT * FROM
+        b_comments
+        WHERE
+        b_comments.c_aid = #{aId}
+        AND b_comments.c_father_cid = #{cId}
+        ORDER BY b_comments.c_date ASC
+    </select>
+
+    <select id="selectCommentsUserByUid" parameterType="long" resultMap="CommentsUserMap">
+        SELECT * FROM b_comments_user WHERE b_comments_user.cu_uid = #{uId}
+    </select>
+
+    <select id="selectCommentCount" parameterType="long" resultType="long">
+        SELECT COUNT(1) FROM
+        b_comments
+        WHERE
+        b_comments.c_aid = #{aId}
+    </select>
+    <select id="selectCommentLimitByAid" resultMap="CommentsMap">
+        SELECT
+        b_comments.c_cid,
+        <!--b_comments.c_uid,-->
+        b_comments.c_aid,
+        <!--b_comments.c_like_count,-->
+        b_comments.c_date,
+        b_comments.c_content,
+        b_comments.c_father_cid,
+        <!--b_comments.c_reply_uid,-->
+        <!--b_comments_user.cu_uid,-->
+        b_comments_user.cu_username,
+        b_comments_user.cu_email,
+        b_comments_user.cu_website
+        FROM
+        b_comments
+        INNER JOIN b_comments_user ON b_comments.c_uid = b_comments_user.cu_uid
+        WHERE b_comments.c_aid = #{aId}
+        ORDER BY b_comments.c_date DESC LIMIT #{page}, #{limit}
+    </select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

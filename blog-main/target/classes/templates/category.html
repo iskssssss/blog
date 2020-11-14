@@ -1,0 +1,352 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>专栏 - K</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="../static/lib/aos/aos.css" media="all">
+  <link rel="stylesheet" href="../static/lib/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../static/lib/materialize/materialize.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/font-awesome/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" href="../static/lib/animate/animate.min.css" media="all">
+  <link rel="stylesheet" href="../static/css/common.css" media="all">
+  <link rel="stylesheet" href="../static/css/header.css" media="all">
+  <link rel="stylesheet" href="../static/css/largeImage.css" media="all">
+
+  <style>
+    /* 上一页 */
+    .pagination-prev {
+      top: -5px;
+    }
+
+    /* 下一页 */
+    .pagination-next {
+      top: -60px;
+    }
+
+    .main p {
+      size: 10px;
+    }
+
+    *:after,
+    *:before {
+      -webkit-box-sizing: border-box !important;
+      box-sizing: border-box !important;
+    }
+
+    .article-item .card {
+      border-radius: 1rem !important;
+      overflow: hidden !important;
+    }
+
+    .article-item .card-content {
+      border-radius: 1rem !important;
+      padding: 5px 15px !important;
+    }
+
+    .article-item .card-action {
+      padding: 5px 15px !important;
+      border-radius: 0 0 1rem 1rem !important;
+    }
+
+
+    .article-item .card-image {
+      background-color: #222 !important;
+    }
+
+    .article-item .card-image img {
+
+      display: block;
+      border-radius: 1rem 1rem 0 0 !important;
+      object-fit: cover !important;
+      height: 256px !important;
+      opacity: .5 !important;
+      width: 100% !important;
+    }
+
+    .article-item .card-image span {
+      font-weight: 200 !important;
+    }
+
+
+    .card-action .icon {
+      margin-left: 0.1rem;
+    }
+
+    .card-action a {
+      color: #000 !important;
+      margin: 0 !important;
+
+      transition: color .3s ease !important;
+      text-transform: unset !important;
+    }
+
+    .card-action a:hover {
+      color: rgb(173, 173, 173) !important;
+    }
+
+    .card-action .right {
+      margin-left: 8px;
+    }
+
+    .card-action .right-top {
+      position: relative;
+      top: 6px !important;
+    }
+
+    .card .card-reveal {
+      padding: 0 !important;
+    }
+
+    .reveal-close {
+      margin: 15px 15px 0 0 !important;
+    }
+
+    @media only screen and (min-width: 993px) {
+      .container {
+        width: 70% !important;
+      }
+    }
+
+    @media only screen and (min-width: 601px) {
+      .container {
+        width: 90% !important;
+      }
+    }
+
+    .layui-laypage a,
+    .layui-laypage span {
+      background-color: transparent;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 菜单栏 -->
+  <header class="navbar-fixed right-align" data-aos="fade-down" data-aos-duration="800">
+    <a href="/" class="blog-logo" style="z-index: 998;">K</a>
+    <div id="sidebarSwitch" class="sidebar-switch hide">
+      <span class="fa fa-navicon"></span>
+    </div>
+    <ul id="mHeader" class="layui-nav" style="background-color:rgba(0, 0, 0, 0);">
+      <li class="layui-nav-item">
+        <a href="/" class="font-size-16">首页</a>
+      </li>
+      <li class="layui-nav-item layui-this">
+        <a href="/category" class="font-size-16">专栏</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/archives" class="font-size-16">归档</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/about" class="font-size-16">关于</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/login" class="font-size-16">登录</a>
+      </li>
+    </ul>
+  </header>
+
+  <!-- 封面预览图 -->
+  <div class="large z-depth-4" data-aos="fade-down" data-aos-duration="1000">
+    <div class="large-header">
+      <div class="mask"></div>
+    </div>
+  </div>
+
+  <!-- 主体 -->
+  <main id="mMain" class="main">
+    <!-- 中间内容 -->
+    <div class="container">
+      <div class="row article-main">
+        <div class="article-item col s12 m6 l4" th:if="${blogList}" th:each="blog : ${blogList}" data-aos="zoom-in"
+          data-aos-duration="500">
+          <div class="card hoverable">
+            <a href="" th:href="'/blog/' + ${blog.blog.abAid}">
+              <div class="card-image" style="vertical-align: bottom;">
+                <img th:src="*{blog?.blog?.abCoverImage}" src="https://picsum.photos/id/1010/200/300">
+                <span class="card-title" th:text="${blog?.blog?.abTitle}">标题</span>
+              </div>
+            </a>
+            <div class="card-content">
+              <!-- 文章简介 -->
+              <div class="line-clamp">
+                <p th:text="${blog?.blog?.abSynopsis}">
+                  量的信息。量的信息。量的信息。量的信息。量的信息。量的信息。量的信息。
+                </p>
+              </div>
+              <!-- 发布日期 -->
+              <div class="info" style="margin-top: 5px;">
+                <i class="fa fa-calendar icon">
+                  <span th:text="${#strings.substring(blog?.blog?.abPublishDate,0,10)}">
+                    2020-11-25
+                  </span>
+                </i>
+                <!-- 发布人  -->
+                  <i class="fa fa-user icon right" th:value="${blog.blog?.userInfo?.uId}">
+                    <span th:text="${blog?.blog?.userInfo?.uNickname}">爱吃素的食人鱼
+                    </span>
+                    </i>
+              </div>
+            </div>
+            <div class="card-action">
+              <!-- 评论数量  -->
+              <i class="fa fa-comment" aria-hidden="true">
+                <span class="icon" th:text="${blog?.blog?.detailedInfo?.adCommentCount}">
+                  0
+                </span>
+              </i>
+
+              <!-- 阅读人数 -->
+              <i class="fa fa-eye" aria-hidden="true">
+                <span class="icon" th:text="${blog?.blog?.detailedInfo?.adViews}">
+                  0
+                </span>
+              </i>
+
+              <!-- 文章其他信息开关 angle-double-up -->
+              <i class="fa fa-tags card-switch activator right" aria-hidden="true">
+                <a class="icon activator">
+                  标签
+                </a>
+              </i> 
+
+              <!-- 分类 -->
+              <i class="fa fa-folder right" aria-hidden="true">
+                <a class="icon" href="#" th:each="sorts : ${blog?.insertSorts}" th:text="${sorts?.sName}" th:value="${sorts?.sSid}">分类</a>
+              </i>
+            </div>
+            <!-- 文章其他信息 -->
+            <div class="card-reveal center-align card-backgroud">
+              <div class="reveal-close">
+                <span class="card-switch card-title grey-text text-darken-4">
+                  <i class="fa fa-angle-double-down right"></i>
+                </span>
+              </div>
+              <!-- 文章标签 -->
+              <div class="chip-reveal-list">
+                <span class="chip" th:each="label : ${blog?.insertLabels}" th:text="${label?.lName}" th:value="${label?.lLid}">标签</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分页 -->
+    <div id="pagination" style="text-align: center;"></div>
+  </main>
+
+  <!-- 底部栏 -->
+  <footer id="mFooter" class="z-depth-5 footer-backgroud">
+    <div class="container center-align">
+      <p>
+        Copyright © 2020
+        <a href="/">kongsheng.top</a>
+        All Rights Reserved KS
+      </p>
+      <!-- &nbsp; | &nbsp; -->
+      <!-- <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" style="margin-bottom: 3px;"> -->
+      <a href="http://www.beian.miit.gov.cn/" class="beian" target="_blank">浙ICP备20016905号</a>
+    </div>
+  </footer>
+
+  <!-- 侧边菜单 -->
+  <a href="#" data-activates="slide-out" class="button-collapse"></a>
+  <ul id="slide-out" class="side-nav sidebar-backgroud">
+    <li><a class="waves-effect" href="/">首页</a></li>
+    <li><a class="waves-effect" href="/category">专栏</a></li>
+    <li><a class="waves-effect" href="/archives">归档</a></li>
+    <li><a class="waves-effect" href="/about">关于</a></li>
+    <li><a class="waves-effect" href="/login">登录</a></li>
+  </ul>
+  
+  <div class="right-button">
+    <!-- 菜单 -->
+    <div id="mMenu" class="mMenu fixed-action-btn animated bounceInRight">
+      <a class="btn-floating btn-large arrow-up-backgroud">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </a>
+    </div>
+    <!-- 返回顶部按钮 -->
+    <div id="arrowUp" class="arrowUp fixed-action-btn animated bounceInRight">
+      <a class="btn-floating btn-large arrow-up-backgroud">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Jquery -->
+  <script src="../static/js/jquery-3.4.1.min.js" th:src="@{../static/js/jquery-3.4.1.min.js}"></script>
+
+  <!-- masonry 瀑布流布局库 -->
+  <script src="../static/js/masonry.pkgd.min.js" charset="utf-8"></script>
+
+  <!-- AOS -->
+  <script src="../static/lib/aos/aos.js" charset="utf-8"></script>
+
+  <!-- LayUI -->
+  <script src="../static/lib/layui/layui.js" charset="utf-8"></script>
+
+  <!-- Materialize -->
+  <script src="../static/lib/materialize/materialize.min.js" charset="utf-8"></script>
+
+  
+  <script src="../static/js/common.js" charset="utf-8"></script>
+
+  <script type="text/javascript" th:inline="javascript">
+    $(function () {
+      if (sessionStorage.getItem("page") == null) {
+        sessionStorage.setItem("page", 1);
+      }
+
+      /*<![CDATA[*/
+      var blogSize = /*[[${blogSize}]]*/ 100;
+      /*]]>*/
+
+      setPage(blogSize);
+      // if (isPhone()) {
+      //   $(".fa-tags").addClass("right-top");
+      //   $(".fa-folder").addClass("right-top");
+      // }
+    });
+
+    function setPage(blogSize) {
+      layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage
+          , layer = layui.layer;
+        laypage.render({
+          elem: 'pagination'
+          , count: blogSize
+          , first: '首页'
+          , last: '尾页'
+          , curr: sessionStorage.getItem("page")
+          , limit: 9
+          , prev: '<em>←</em>'
+          , next: '<em>→</em>'
+          , layout: ['count', 'prev', 'page', 'next', 'refresh', 'skip']
+          , jump: function (obj, first) {
+            if (!first) {
+              sessionStorage.setItem("page", obj.curr);
+              window.location.href = '/category/' + sessionStorage.getItem("page");
+            }
+          }
+        });
+      });
+    }
+
+    function isPhone() {
+      var ua = navigator.userAgent;
+      var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+        isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+        isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+        isMobile = isIphone || isAndroid;
+      return isMobile == null ? false : true;
+    }
+  </script>
+</body>
+
+</html>

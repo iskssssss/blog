@@ -1,0 +1,9 @@
+
+
+java:S1130"sRemove the declaration of thrown exception 'org.springframework.beans.BeansException' which is a runtime exception.(ØÁÌ8æ‰Úš—.
+S
+java:S2696"6Make the enclosing method "static" or remove this set.(—†Õç8ó¼Üš—.
+
+java:S1130"sRemove the declaration of thrown exception 'org.springframework.beans.BeansException' which is a runtime exception.(”›£«8Âó«™.
+
+java:S1130$"sRemove the declaration of thrown exception 'org.springframework.beans.BeansException' which is a runtime exception.(÷æÕ³8ª³ñ«™.

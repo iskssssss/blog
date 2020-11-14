@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eternity.blog.system.mapper.IUserMapper">
+    <resultMap id="UserMap" type="com.eternity.blog.system.domain.user.UserModel">
+        <id property="uId" column="u_uid"/>
+        <result property="uNickname" column="u_nickname"/>
+        <result property="uGender" column="u_gender"/>
+        <result property="uBirthday" column="u_birthday"/>
+        <result property="uPhone" column="u_phone"/>
+        <result property="uEmail" column="u_email"/>
+        <result property="uLocation" column="u_location"/>
+        <result property="uHometown" column="u_hometown"/>
+        <result property="uCompany" column="u_company"/>
+        <result property="uSchool" column="u_school"/>
+        <result property="uOccupation" column="u_occupation"/>
+        <result property="uStatus" column="u_status"/>
+        <association property="userAuthsModel" javaType="com.eternity.blog.system.domain.user.UserAuthsModel" resultMap="UserAuthsMap" />
+    </resultMap>
+
+    <resultMap id="UserAuthsMap" type="com.eternity.blog.system.domain.user.UserAuthsModel">
+        <id property="aId" column="a_id" />
+        <result property="aUid" column="a_uid" />
+        <result property="aType" column="a_type" />
+        <result property="aIdentifier" column="a_identifier" />
+        <result property="aCredential" column="a_credential" />
+        <result property="aVerification" column="a_verification" />
+        <result property="aSalt" column="a_salt" />
+    </resultMap>
+
+    <resultMap id="LoginLogMap" type="com.eternity.blog.system.domain.user.LoginLogModel">
+        <id property="llId" column="ll_id" />
+        <id property="llUid" column="ll_uid" />
+        <id property="llDate" column="ll_date" />
+        <id property="llIp" column="ll_ip" />
+        <id property="llType" column="ll_type" />
+    </resultMap>
+
+    <sql id="selectSql">
+        SELECT
+        u_users.u_uid, u_users.u_nickname, u_users.u_gender,
+        u_users.u_birthday, u_users.u_phone, u_users.u_email,
+        u_users.u_location, u_users.u_hometown, u_users.u_company,
+        u_users.u_school, u_users.u_occupation, u_users.u_status,
+        u_auths.a_uid, u_auths.a_type, u_auths.a_identifier,
+        u_auths.a_credential, u_auths.a_verification, u_auths.a_salt
+        FROM
+        u_users INNER JOIN u_auths ON u_users.u_uid = u_auths.a_uid
+    </sql>
+    <!--添加用户 useGeneratedKeys="true" keyProperty="uId"-->
+    <insert id="insertUser" parameterType="com.eternity.blog.system.domain.user.UserModel">
+        INSERT INTO u_users (
+        u_uid,
+        u_nickname,
+        u_gender,
+        <if test="uBirthday != null and uBirthday != ''">u_birthday,</if>
+        u_phone,
+        <if test="uEmail != null and uEmail != ''">u_email,</if>
+        <if test="uLocation != null and uLocation != ''">u_location,</if>
+        <if test="uHometown != null and uHometown != ''">u_hometown,</if>
+        <if test="uCompany != null and uCompany != ''">u_company,</if>
+        <if test="uSchool != null and uSchool != ''">u_school,</if>
+        <if test="uOccupation != null and uOccupation != ''">u_occupation,</if>
+        u_status
+        ) VALUES (
+        #{uId},
+        #{uNickname},
+        #{uGender},
+        <if test="uBirthday != null and uBirthday != ''">#{uBirthday},</if>
+        #{uPhone},
+        <if test="uEmail != null and uEmail != ''">#{uEmail},</if>
+        <if test="uLocation != null and uLocation != ''">#{uLocation},</if>
+        <if test="uHometown != null and uHometown != ''">#{uHometown},</if>
+        <if test="uCompany != null and uCompany != ''">#{uCompany},</if>
+        <if test="uSchool != null and uSchool != ''">#{uSchool},</if>
+        <if test="uOccupation != null and uOccupation != ''">#{uOccupation},</if>
+        #{uStatus}
+        )
+    </insert>
+    <!--添加用户验证信息 useGeneratedKeys="true" keyProperty="a_id"-->
+    <insert id="insertUserAuths" parameterType="com.eternity.blog.system.domain.user.UserAuthsModel">
+        INSERT INTO u_auths (
+        a_uid, a_type, a_identifier,
+        a_credential, a_verification
+        <if test="aSalt != null and aSalt != ''">,a_salt</if>
+        ) VALUES (
+        #{aUid}, #{aType}, #{aIdentifier},
+        #{aCredential}, #{aVerification}
+        <if test="aSalt != null and aSalt != ''">,#{aSalt}</if>
+        )
+    </insert>
+    <!--添加用户注册信息-->
+    <insert id="insertRegister" parameterType="com.eternity.blog.system.domain.user.RegisterModel">
+        INSERT INTO u_register_log (
+        u_register_log.rl_uid,
+        u_register_log.rl_date,
+        u_register_log.rl_ip
+        ) VALUES (
+        #{rlUid}, #{rlDate}, #{rlIp}
+        )
+    </insert>
+    <!--添加登陆记录-->
+    <insert id="insertLoginLog" parameterType="com.eternity.blog.system.domain.user.LoginLogModel">
+        INSERT INTO u_login_log (
+        u_login_log.ll_uid,
+        u_login_log.ll_date,
+        u_login_log.ll_ip,
+        u_login_log.ll_type
+        ) VALUES (
+        #{llUid}, #{llDate}, #{llIp}, #{llType}
+        )
+    </insert>
+    <!--通过账号查询用户-->
+    <select id="selectUserByUid" parameterType="long" resultMap="UserMap">
+        <include refid="selectSql"/>
+        WHERE u_auths.a_identifier = #{userUid} and u_auths.a_type = 0
+    </select>
+    <!--查询用户信息(手机号)-->
+    <select id="selectUserByPhone" parameterType="string" resultMap="UserMap">
+        <include refid="selectSql"/>
+        WHERE u_auths.a_identifier = #{userPhone} and u_auths.a_type = 1
+    </select>
+    <!--校验用户Uid是否唯一-->
+    <select id="checkUidUnique" parameterType="long" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM u_users
+        INNER JOIN u_auths ON u_users.u_uid = u_auths.a_uid
+        WHERE u_auths.a_identifier = #{userUid}
+    </select>
+    <!--校验用户验证是否唯一-->
+    <select id="checkUserAuthsUnique" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM u_auths
+        WHERE u_auths.a_identifier = #{aIdentifier} AND u_auths.a_type = #{aType}
+    </select>
+</mapper>
